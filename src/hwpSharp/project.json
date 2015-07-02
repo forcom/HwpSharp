@@ -1,0 +1,27 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "C# Library for HWP documents",
+  "authors": [ "Yoon SeungYong" ],
+  "tags": [ "" ],
+  "projectUrl": "https://github.com/forcom/hwpSharp",
+  "licenseUrl": "https://raw.githubusercontent.com/forcom/hwpSharp/master/LICENSE",
+
+  "dependencies": {
+  },
+
+  "frameworks": {
+    "net45": { },
+    "net451": { },
+    "net452": { },
+    "net46": { },
+    "dnx451": { },
+    "dnxcore50": {
+      "dependencies": {
+        "System.Collections": "4.0.10-beta-22816",
+        "System.Linq": "4.0.0-beta-22816",
+        "System.Threading": "4.0.10-beta-22816",
+        "Microsoft.CSharp": "4.0.0-beta-22816"
+      }
+    }
+  }
+}
