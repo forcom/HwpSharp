@@ -1,19 +1,41 @@
 ﻿{
-  "version": "1.0.0-*",
-  "description": "C# Library for HWP documents",
   "authors": [ "Yoon SeungYong" ],
-  "tags": [ "" ],
-  "projectUrl": "https://github.com/forcom/hwpSharp",
-  "licenseUrl": "https://raw.githubusercontent.com/forcom/hwpSharp/master/LICENSE",
-
   "dependencies": {
   },
-
+  "description": "C# Library for HWP documents",
   "frameworks": {
-    "net45": { },
-    "net451": { },
-    "net452": { },
-    "net46": { },
+    "net45": {
+      "frameworkAssemblies": {
+        "System": "4.0.0.0",
+        "System.Runtime": "4.0.0.0",
+        "System.Collections": "4.0.0.0",
+        "System.Linq": "4.0.0.0"
+      }
+    },
+    "net451": {
+      "frameworkAssemblies": {
+        "System": "4.0.0.0",
+        "System.Runtime": "4.0.0.0",
+        "System.Collections": "4.0.0.0",
+        "System.Linq": "4.0.0.0"
+      }
+    },
+    "net452": {
+      "frameworkAssemblies": {
+        "System": "4.0.0.0",
+        "System.Runtime": "4.0.0.0",
+        "System.Collections": "4.0.0.0",
+        "System.Linq": "4.0.0.0"
+      }
+    },
+    "net46": {
+      "frameworkAssemblies": {
+        "System": "4.0.0.0",
+        "System.Runtime": "4.0.0.0",
+        "System.Collections": "4.0.0.0",
+        "System.Linq": "4.0.0.0"
+      }
+    },
     "dnx451": { },
     "dnxcore50": {
       "dependencies": {
@@ -23,5 +45,9 @@
         "Microsoft.CSharp": "4.0.0-beta-22816"
       }
     }
-  }
+  },
+  "licenseUrl": "https://raw.githubusercontent.com/forcom/hwpSharp/master/LICENSE",
+  "projectUrl": "https://github.com/forcom/hwpSharp",
+  "tags": [ "" ],
+  "version": "1.0.0-*"
 }
