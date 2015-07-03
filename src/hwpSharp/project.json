@@ -1,6 +1,7 @@
 ﻿{
   "authors": [ "Yoon SeungYong" ],
   "dependencies": {
+    "OpenMcdf": "1.5.4.22637"
   },
   "description": "C# Library for HWP documents",
   "frameworks": {

@@ -1,4 +1,4 @@
-﻿namespace hwpSharp.HwpType
+﻿namespace hwpSharp.Hwp5.HwpType
 {
     /// <summary>
     ///     Unsigned 1 byte (0-255).
