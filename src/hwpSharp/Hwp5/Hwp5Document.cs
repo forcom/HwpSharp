@@ -26,31 +26,51 @@ namespace hwpSharp.Hwp5
         /// <summary>
         /// Gets a document information of this document.
         /// </summary>
-        public Hwp5DocumentInformation DocumentInformation { get; private set; }
+        public Hwp5DocumentInformation DocumentInformation
+        {
+            get { throw new NotImplementedException(); }
+            private set { throw new NotImplementedException(); }
+        }
 
         /// <summary>
         /// Gets a body text of this document.
         /// </summary>
-        public Hwp5BodyText BodyText { get; private set; }
+        public Hwp5BodyText BodyText
+        {
+            get { throw new NotImplementedException(); }
+            private set { throw new NotImplementedException(); }
+        }
 
         /// <summary>
         /// Gets a summary information of this document.
         /// </summary>
-        public Hwp5SummaryInformation SummaryInformation { get; private set; }
+        public Hwp5SummaryInformation SummaryInformation
+        {
+            get { throw new NotImplementedException(); }
+            private set { throw new NotImplementedException(); }
+        }
 
-        protected Hwp5Document(CompoundFile compoundFile)
+        internal Hwp5Document(CompoundFile compoundFile)
         {
             Load(compoundFile);
         }
 
         private void Load(CompoundFile compoundFile)
         {
-            var fileHeader = LoadFileHeader(compoundFile);
+            FileHeader = LoadFileHeader(compoundFile);
         }
 
         private static Hwp5FileHeader LoadFileHeader(CompoundFile compoundFile)
         {
-            var stream = compoundFile.RootStorage.GetStream("FileHeader");
+            CFStream stream;
+            try
+            {
+                stream = compoundFile.RootStorage.GetStream("FileHeader");
+            }
+            catch (CFItemNotFound exception)
+            {
+                throw new HwpFileFormatException("Specified document does not have a FileHeader field.", exception);
+            }
 
             var fileHeader = new Hwp5FileHeader(stream);
 
@@ -63,7 +83,20 @@ namespace hwpSharp.Hwp5
         /// <param name="stream">A stream which contains a hwp 5 document.</param>
         public Hwp5Document(Stream stream)
         {
-            var compoundFile = new CompoundFile(stream);
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+
+            CompoundFile compoundFile;
+            try
+            {
+                compoundFile = new CompoundFile(stream);
+            }
+            catch(CFFileFormatException exception)
+            {
+                throw new HwpFileFormatException("Specified document is not a hwp 5 document format.", exception);
+            }
 
             Load(compoundFile);
         }
@@ -74,7 +107,20 @@ namespace hwpSharp.Hwp5
         /// <param name="filename">A file name of a hwp 5 document.</param>
         public Hwp5Document(string filename)
         {
-            var compoundFile = new CompoundFile(filename);
+            if (string.IsNullOrWhiteSpace(filename))
+            {
+                throw new ArgumentNullException(nameof(filename));
+            }
+
+            CompoundFile compoundFile;
+            try
+            {
+                compoundFile = new CompoundFile(filename);
+            }
+            catch (CFFileFormatException exception)
+            {
+                throw new HwpFileFormatException("Specified document is not a hwp 5 document format.", exception);
+            }
 
             Load(compoundFile);
         }

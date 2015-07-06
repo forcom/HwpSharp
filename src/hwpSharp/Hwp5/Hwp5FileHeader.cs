@@ -141,7 +141,7 @@ namespace hwpSharp.Hwp5
                 throw new HwpFileFormatException("File does not have a version field. File may be corrupted.");
             }
 
-            FileVersion = new Version(versionBytes[0], versionBytes[1], versionBytes[2], versionBytes[3]);
+            FileVersion = new Version(versionBytes[3], versionBytes[2], versionBytes[1], versionBytes[0]);
 
             if (FileVersion.Major != 5 || FileVersion.Minor != 0)
             {

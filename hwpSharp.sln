@@ -16,6 +16,35 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "hwpSharp.Tests", "test\hwpSharp.Tests\hwpSharp.Tests.xproj", "{07196994-8FEF-417A-9144-05135AA6497A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "case", "case", "{C1C298A2-EFDC-406B-A9B3-FC671F8EDD76}"
+	ProjectSection(SolutionItems) = preProject
+		test\case\CompoundFile.xls = test\case\CompoundFile.xls
+		test\case\Hwp3File.hwp = test\case\Hwp3File.hwp
+		test\case\PdfFile.pdf = test\case\PdfFile.pdf
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hwp5", "Hwp5", "{8D356E47-AFA9-4915-B50A-A5AB3573ED0A}"
+	ProjectSection(SolutionItems) = preProject
+		test\case\Hwp5\BlogForm_BookReview.hwp = test\case\Hwp5\BlogForm_BookReview.hwp
+		test\case\Hwp5\BlogForm_MovieReview.hwp = test\case\Hwp5\BlogForm_MovieReview.hwp
+		test\case\Hwp5\BlogForm_Recipe.hwp = test\case\Hwp5\BlogForm_Recipe.hwp
+		test\case\Hwp5\BookReview.hwp = test\case\Hwp5\BookReview.hwp
+		test\case\Hwp5\calendar_monthly.hwp = test\case\Hwp5\calendar_monthly.hwp
+		test\case\Hwp5\calendar_year.hwp = test\case\Hwp5\calendar_year.hwp
+		test\case\Hwp5\classical_literature.hwp = test\case\Hwp5\classical_literature.hwp
+		test\case\Hwp5\english.hwp = test\case\Hwp5\english.hwp
+		test\case\Hwp5\Hyper(hwp2010).hwp = test\case\Hwp5\Hyper(hwp2010).hwp
+		test\case\Hwp5\interview.hwp = test\case\Hwp5\interview.hwp
+		test\case\Hwp5\KTX.hwp = test\case\Hwp5\KTX.hwp
+		test\case\Hwp5\NewYear_s_Day.hwp = test\case\Hwp5\NewYear_s_Day.hwp
+		test\case\Hwp5\request.hwp = test\case\Hwp5\request.hwp
+		test\case\Hwp5\shortcut.hwp = test\case\Hwp5\shortcut.hwp
+		test\case\Hwp5\sungeo.hwp = test\case\Hwp5\sungeo.hwp
+		test\case\Hwp5\Textmail.hwp = test\case\Hwp5\Textmail.hwp
+		test\case\Hwp5\treatise sample.hwp = test\case\Hwp5\treatise sample.hwp
+		test\case\Hwp5\Worldcup_FIFA2010_32.hwp = test\case\Hwp5\Worldcup_FIFA2010_32.hwp
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,5 +66,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{E8AB29C7-8222-4EC8-BFF2-06C1C119ABEA} = {6DA16CB8-1D96-4C11-AC54-5210A16E8AD6}
 		{07196994-8FEF-417A-9144-05135AA6497A} = {99B07E9B-510B-4884-B486-042DC09B333E}
+		{C1C298A2-EFDC-406B-A9B3-FC671F8EDD76} = {99B07E9B-510B-4884-B486-042DC09B333E}
+		{8D356E47-AFA9-4915-B50A-A5AB3573ED0A} = {C1C298A2-EFDC-406B-A9B3-FC671F8EDD76}
 	EndGlobalSection
 EndGlobal

@@ -15,7 +15,8 @@
         "System": "4.0.0.0",
         "System.Runtime": "4.0.0.0",
         "System.Collections": "4.0.0.0",
-        "System.Linq": "4.0.0.0"
+        "System.Linq": "4.0.0.0",
+        "System.Threading.Tasks": "4.0.0.0"
       }
     },
     "net451": {
@@ -23,7 +24,8 @@
         "System": "4.0.0.0",
         "System.Runtime": "4.0.0.0",
         "System.Collections": "4.0.0.0",
-        "System.Linq": "4.0.0.0"
+        "System.Linq": "4.0.0.0",
+        "System.Threading.Tasks": "4.0.0.0"
       }
     },
     "net452": {
@@ -31,7 +33,8 @@
         "System": "4.0.0.0",
         "System.Runtime": "4.0.0.0",
         "System.Collections": "4.0.0.0",
-        "System.Linq": "4.0.0.0"
+        "System.Linq": "4.0.0.0",
+        "System.Threading.Tasks": "4.0.0.0"
       }
     },
     "net46": {
@@ -39,18 +42,11 @@
         "System": "4.0.0.0",
         "System.Runtime": "4.0.0.0",
         "System.Collections": "4.0.0.0",
-        "System.Linq": "4.0.0.0"
+        "System.Linq": "4.0.0.0",
+        "System.Threading.Tasks": "4.0.0.0"
       }
     },
-    "dnx451": { },
-    "dnxcore50": {
-      "dependencies": {
-        "System.Collections": "4.0.10-beta-22816",
-        "System.Linq": "4.0.0-beta-22816",
-        "System.Threading": "4.0.10-beta-22816",
-        "Microsoft.CSharp": "4.0.0-beta-22816"
-      }
-    }
+    "dnx451": { }
   },
   "licenseUrl": "",
   "projectUrl": "",
