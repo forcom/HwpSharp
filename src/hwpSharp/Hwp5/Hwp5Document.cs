@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO.Compression;
 using hwpSharp.Common;
 using OpenMcdf;
 
@@ -137,6 +135,34 @@ namespace hwpSharp.Hwp5
             }
 
             Load(compoundFile);
+        }
+
+        internal static byte[] GetRawBytesFromStream(CFStream stream, Hwp5FileHeader fileHeader)
+        {
+            var streamBytes = stream.GetData();
+
+            if (fileHeader.PasswordEncrypted)
+            {
+                throw new HwpUnsupportedFormatException("Does not support a password encrypted document.");
+            }
+
+            if (fileHeader.Compressed)
+            {
+                using (var dataStream = new MemoryStream(streamBytes, false))
+                {
+                    using (var zipStream = new DeflateStream(dataStream, CompressionMode.Decompress))
+                    {
+                        using (var decStream = new MemoryStream())
+                        {
+                            zipStream.CopyTo(decStream);
+
+                            streamBytes = decStream.ToArray();
+                        }
+                    }
+                }
+            }
+
+            return streamBytes;
         }
     }
 }
