@@ -1,4 +1,8 @@
-﻿namespace hwpSharp.Hwp5.HwpType
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace hwpSharp.Hwp5.HwpType
 {
     /// <summary>
     ///     Unsigned 1 byte (0-255).
@@ -470,6 +474,130 @@
         public static implicit operator uint(ColorRef value)
         {
             return value.Red + value.Green*0x100u + value.Blue*0x10000u;
+        }
+    }
+
+    public static class ByteArrayConverter
+    {
+        public static Word ToWord(this IEnumerable<byte> bytes)
+        {
+            var arr = bytes.Take(2).ToArray();
+            if (arr.Length < 2)
+            {
+                throw new ArgumentOutOfRangeException(nameof(bytes), "Word needs at least 2 bytes.");
+            }
+
+            return (ushort) (arr[0] + arr[1]*0x100u);
+        }
+
+        public static Dword ToDword(this IEnumerable<byte> bytes)
+        {
+            var arr = bytes.Take(4).ToArray();
+            if (arr.Length < 4)
+            {
+                throw new ArgumentOutOfRangeException(nameof(bytes), "Dword needs at least 4 bytes.");
+            }
+
+            return arr[0] + arr[1]*0x100u + arr[2]*0x10000u + arr[3]*0x1000000u;
+        }
+
+        public static Wchar ToWchar(this IEnumerable<byte> bytes)
+        {
+            var arr = bytes.Take(2).ToArray();
+            if (arr.Length < 2)
+            {
+                throw new ArgumentOutOfRangeException(nameof(bytes), "Wchar needs at least 2 bytes.");
+            }
+
+            return (char) (arr[0] + arr[1]*0x100u);
+        }
+
+        public static HwpUnit ToHwpUnit(this IEnumerable<byte> bytes)
+        {
+            var arr = bytes.Take(4).ToArray();
+            if (arr.Length < 4)
+            {
+                throw new ArgumentOutOfRangeException(nameof(bytes), "HwpUnit needs at least 4 bytes.");
+            }
+
+            return arr[0] + arr[1]*0x100u + arr[2]*0x10000u + arr[3]*0x1000000u;
+        }
+
+        public static SHwpUnit ToSHwpUnit(this IEnumerable<byte> bytes)
+        {
+            var arr = bytes.Take(4).ToArray();
+            if (arr.Length < 4)
+            {
+                throw new ArgumentOutOfRangeException(nameof(bytes), "SHwpUnit needs at least 4 bytes.");
+            }
+
+            return arr[0] + arr[1]*0x100 + arr[2]*0x10000 + arr[3]*0x1000000;
+        }
+
+        public static UInt16 ToUInt16(this IEnumerable<byte> bytes)
+        {
+            var arr = bytes.Take(2).ToArray();
+            if (arr.Length < 2)
+            {
+                throw new ArgumentOutOfRangeException(nameof(bytes), "UInt16 needs at least 2 bytes.");
+            }
+
+            return (ushort) (arr[0] + arr[1]*0x100u);
+        }
+
+        public static UInt32 ToUInt32(this IEnumerable<byte> bytes)
+        {
+            var arr = bytes.Take(4).ToArray();
+            if (arr.Length < 4)
+            {
+                throw new ArgumentOutOfRangeException(nameof(bytes), "UInt32 needs at least 4 bytes.");
+            }
+
+            return arr[0] + arr[1]*0x100u + arr[2]*0x10000u + arr[3]*0x1000000u;
+        }
+
+        public static Int16 ToInt16(this IEnumerable<byte> bytes)
+        {
+            var arr = bytes.Take(2).ToArray();
+            if (arr.Length < 2)
+            {
+                throw new ArgumentOutOfRangeException(nameof(bytes), "Int16 needs at least 2 bytes.");
+            }
+
+            return (short) (arr[0] + arr[1]*0x100);
+        }
+
+        public static Int32 ToInt32(this IEnumerable<byte> bytes)
+        {
+            var arr = bytes.Take(4).ToArray();
+            if (arr.Length < 4)
+            {
+                throw new ArgumentOutOfRangeException(nameof(bytes), "Int32 needs at least 4 bytes.");
+            }
+
+            return arr[0] + arr[1]*0x100 + arr[2]*0x10000 + arr[3]*0x1000000;
+        }
+
+        public static HwpUnit16 ToHwpUnit16(this IEnumerable<byte> bytes)
+        {
+            var arr = bytes.Take(2).ToArray();
+            if (arr.Length < 2)
+            {
+                throw new ArgumentOutOfRangeException(nameof(bytes), "HwpUnit16 needs at least 2 bytes.");
+            }
+
+            return (short) (arr[0] + arr[1]*0x100);
+        }
+
+        public static ColorRef ToColorRef(this IEnumerable<byte> bytes)
+        {
+            var arr = bytes.Take(4).ToArray();
+            if (arr.Length < 4)
+            {
+                throw new ArgumentOutOfRangeException(nameof(bytes), "ColorRef needs at least 4 bytes.");
+            }
+
+            return new ColorRef(arr[0], arr[1], arr[2]);
         }
     }
 }

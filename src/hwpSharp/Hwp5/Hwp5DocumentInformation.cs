@@ -66,8 +66,7 @@ namespace hwpSharp.Hwp5
                 pos += 4;
                 if (header.Size == 0xfff)
                 {
-                    header.Size = bytes[pos] + bytes[pos + 1]*0x100u + bytes[pos + 2]*0x10000u +
-                                  bytes[pos + 3]*0x1000000u;
+                    header.Size = bytes.Skip(pos).ToDword();
                 }
                 var recordBytes = bytes.Skip(pos).Take((int) (uint) header.Size).ToArray();
                 var record = CreateRecordFromHeader(header, recordBytes);
