@@ -12,40 +12,48 @@ namespace hwpSharp.Hwp5.HwpType
         /// <summary>
         /// Gets the tag id of data record.
         /// </summary>
-        public TagEnum Tag { get; protected set; }
+        public TagEnum Tag { get; internal set; }
 
         /// <summary>
         /// Gets the level of data record.
         /// </summary>
-        public int Level { get; protected set; }
+        public int Level { get; internal set; }
 
         /// <summary>
         /// Gets the size of data record.
         /// </summary>
-        public Dword Size { get; protected set; }
+        public Dword Size { get; internal set; }
 
-        protected DataRecord(byte[] recordBytes)
+        internal static DataRecord ParseHeaderBytes(byte[] headerBytes)
         {
-            if (recordBytes == null)
+            if (headerBytes == null)
             {
-                throw new ArgumentNullException(nameof(recordBytes));
+                throw new ArgumentNullException(nameof(headerBytes));
             }
 
             TagEnum tag;
-            var tagParsed = Enum.TryParse($"{recordBytes[3]*0x100 + (recordBytes[2] >> 6)}", out tag);
+            var tagParsed = Enum.TryParse($"{(headerBytes[1] & 0x3)*0x100 + headerBytes[0]}", out tag);
             if (!tagParsed)
             {
-                throw new ArgumentException(nameof(recordBytes));
+                tag = TagEnum.Unknown;
             }
+
+            // 10 bits for level, but 0 <= level <= 3 in the spec.
+            var level = headerBytes[2] & 0xf;
+
+            Dword size = (uint) (headerBytes[3]*0x10u + (headerBytes[2] >> 4));
+
+            return new DataRecordImpl(tag, level, size);
+        }
+    }
+
+    internal class DataRecordImpl : DataRecord
+    {
+        public DataRecordImpl(TagEnum tag, int level, Dword size)
+        {
             Tag = tag;
-
-            Level = ((recordBytes[2] & 0x3f) << 4) + recordBytes[1] >> 4;
-
-            Size = ((recordBytes[1] & 0xfu) << 8) + recordBytes[0];
-            if (Size == 0xfff)
-            {
-                Size = recordBytes[4];
-            }
+            Level = level;
+            Size = size;
         }
     }
 }

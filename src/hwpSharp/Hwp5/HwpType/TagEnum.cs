@@ -10,6 +10,8 @@ namespace hwpSharp.Hwp5.HwpType
     /// </summary>
     public enum TagEnum
     {
+        Unknown = -1,
+
         /// <summary>
         /// Document property.
         /// </summary>

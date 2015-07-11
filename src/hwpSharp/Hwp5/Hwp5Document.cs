@@ -26,11 +26,7 @@ namespace hwpSharp.Hwp5
         /// <summary>
         /// Gets a document information of this document.
         /// </summary>
-        public Hwp5DocumentInformation DocumentInformation
-        {
-            get { throw new NotImplementedException(); }
-            private set { throw new NotImplementedException(); }
-        }
+        public Hwp5DocumentInformation DocumentInformation { get; private set; }
 
         /// <summary>
         /// Gets a body text of this document.
@@ -58,6 +54,24 @@ namespace hwpSharp.Hwp5
         private void Load(CompoundFile compoundFile)
         {
             FileHeader = LoadFileHeader(compoundFile);
+            DocumentInformation = LoadDocumentInformation(compoundFile);
+        }
+
+        private Hwp5DocumentInformation LoadDocumentInformation(CompoundFile compoundFile)
+        {
+            CFStream stream;
+            try
+            {
+                stream = compoundFile.RootStorage.GetStream("DocInfo");
+            }
+            catch (CFItemNotFound exception)
+            {
+                throw new HwpFileFormatException("Specified document does not have a DocInfo field.", exception);
+            }
+
+            var docInfo = new Hwp5DocumentInformation(stream, FileHeader);
+
+            return docInfo;
         }
 
         private static Hwp5FileHeader LoadFileHeader(CompoundFile compoundFile)
