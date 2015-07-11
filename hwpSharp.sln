@@ -36,6 +36,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hwp5", "Hwp5", "{8D356E47-A
 		test\case\Hwp5\Hyper(hwp2010).hwp = test\case\Hwp5\Hyper(hwp2010).hwp
 		test\case\Hwp5\interview.hwp = test\case\Hwp5\interview.hwp
 		test\case\Hwp5\KTX.hwp = test\case\Hwp5\KTX.hwp
+		test\case\Hwp5\multisection.hwp = test\case\Hwp5\multisection.hwp
 		test\case\Hwp5\NewYear_s_Day.hwp = test\case\Hwp5\NewYear_s_Day.hwp
 		test\case\Hwp5\request.hwp = test\case\Hwp5\request.hwp
 		test\case\Hwp5\shortcut.hwp = test\case\Hwp5\shortcut.hwp

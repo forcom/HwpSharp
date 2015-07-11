@@ -36,7 +36,7 @@ namespace hwpSharp.Hwp5.DataRecords
 
         private void ParseRecord(byte[] bytes)
         {
-            SectionCount = (ushort) (bytes[3]*0x100u + bytes[4]);
+            SectionCount = (ushort) (bytes[1]*0x100u + bytes[0]);
         }
     }
 }
