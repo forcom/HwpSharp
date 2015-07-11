@@ -37,6 +37,15 @@ namespace hwpSharp.Hwp5.DataRecords
         private void ParseRecord(byte[] bytes)
         {
             SectionCount = bytes.ToUInt16();
+            StartPageNumber = bytes.Skip(2).ToUInt16();
+            StartFootNoteNumber = bytes.Skip(4).ToUInt16();
+            StartEndNoteNumber = bytes.Skip(6).ToUInt16();
+            StartPictureNumber = bytes.Skip(8).ToUInt16();
+            StartTableNumber = bytes.Skip(10).ToUInt16();
+            StartEquationNumber = bytes.Skip(12).ToUInt16();
+            ListId = bytes.Skip(14).ToUInt32();
+            ParagraphId = bytes.Skip(18).ToUInt32();
+            CharacterUnitPosition = bytes.Skip(22).ToUInt32();
         }
     }
 }
