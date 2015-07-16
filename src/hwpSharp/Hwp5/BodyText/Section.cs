@@ -11,9 +11,12 @@ namespace hwpSharp.Hwp5.BodyText
     {
         public Hwp5DocumentInformation DocumentInformation { get; private set; }
 
+        public List<Paragraph> Paragraphs { get; }
+
         public Section(Hwp5DocumentInformation docInfo)
         {
             DocumentInformation = docInfo;
+            Paragraphs = new List<Paragraph>();
         }
 
         internal Section(CFStream stream, Hwp5DocumentInformation docInfo)
@@ -23,7 +26,29 @@ namespace hwpSharp.Hwp5.BodyText
             var bytes = Hwp5Document.GetRawBytesFromStream(stream, docInfo.FileHeader);
             var records = DataRecord.GetRecordsFromBytes(bytes);
 
-            throw new NotImplementedException();
+            var initRecords = new List<DataRecord>();
+            foreach (var record in records)
+            {
+                if (record.Tag == TagEnum.ParagraphHeader)
+                {
+                    if (initRecords.Count > 0)
+                    {
+                        var paragraph = new Paragraph(initRecords);
+
+                        Paragraphs.Add(paragraph);
+
+                        initRecords = new List<DataRecord>();
+                    }
+                }
+                initRecords.Add(record);
+            }
+
+            if (initRecords.Count > 0)
+            {
+                var paragraph = new Paragraph(initRecords);
+
+                Paragraphs.Add(paragraph);
+            }
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using hwpSharp.Common;
+using hwpSharp.Hwp5.DataRecords.BodyText;
 using hwpSharp.Hwp5.DataRecords.DocumentInformation;
 
 namespace hwpSharp.Hwp5.HwpType
@@ -50,18 +51,26 @@ namespace hwpSharp.Hwp5.HwpType
             return new DataRecordImpl(tag, level, size);
         }
 
-        internal static DataRecord CreateRecordFromHeader(DataRecord header, byte[] bytes)
+        internal static DataRecord CreateRecordFromHeader(DataRecord header, byte[] bytes, Hwp5DocumentInformation docInfo = null)
         {
             switch (header.Tag)
             {
                 case TagEnum.DocumentProperties:
                     return new DocumentPropertyDataRecord(header.Size, bytes);
+                case TagEnum.ParagraphHeader:
+                    if (docInfo == null)
+                    {
+                        throw new ArgumentNullException($"{nameof(docInfo)} is required to create a ParagraphHeaderDataRecord instance.");
+                    }
+                    return new ParagraphHeaderDataRecord(header.Size, bytes, docInfo);
+                case TagEnum.ParagraphText:
+                    return new ParagraphTextDataRecord(header.Size, bytes);
                 default:
                     return null;
             }
         }
 
-        internal static IEnumerable<DataRecord> GetRecordsFromBytes(byte[] bytes)
+        internal static IEnumerable<DataRecord> GetRecordsFromBytes(byte[] bytes, Hwp5DocumentInformation docInfo = null)
         {
             var records = new List<DataRecord>();
 
@@ -81,7 +90,7 @@ namespace hwpSharp.Hwp5.HwpType
                     header.Size = bytes.Skip(pos).ToDword();
                 }
                 var recordBytes = bytes.Skip(pos).Take((int) (uint) header.Size).ToArray();
-                var record = CreateRecordFromHeader(header, recordBytes);
+                var record = CreateRecordFromHeader(header, recordBytes, docInfo);
 
                 if (record != null)
                 {
