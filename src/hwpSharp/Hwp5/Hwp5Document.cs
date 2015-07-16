@@ -29,11 +29,7 @@ namespace hwpSharp.Hwp5
         /// <summary>
         /// Gets a body text of this document.
         /// </summary>
-        public Hwp5BodyText BodyText
-        {
-            get { throw new NotImplementedException(); }
-            private set { throw new NotImplementedException(); }
-        }
+        public Hwp5BodyText BodyText { get; private set; }
 
         /// <summary>
         /// Gets a summary information of this document.
@@ -53,6 +49,24 @@ namespace hwpSharp.Hwp5
         {
             FileHeader = LoadFileHeader(compoundFile);
             DocumentInformation = LoadDocumentInformation(compoundFile);
+            BodyText = LoadBodyText(compoundFile);
+        }
+
+        private Hwp5BodyText LoadBodyText(CompoundFile compoundFile)
+        {
+            CFStorage storage;
+            try
+            {
+                storage = compoundFile.RootStorage.GetStorage("BodyText");
+            }
+            catch (CFItemNotFound exception)
+            {
+                throw new HwpFileFormatException("Specified document does not have any BodyText fields.", exception);
+            }
+
+            var bodyText = new Hwp5BodyText(storage, DocumentInformation);
+
+            return bodyText;
         }
 
         private Hwp5DocumentInformation LoadDocumentInformation(CompoundFile compoundFile)

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using hwpSharp.Common;
-using hwpSharp.Hwp5.DataRecords;
+using hwpSharp.Hwp5.DataRecords.DocumentInformation;
 
 namespace hwpSharp.Hwp5.HwpType
 {

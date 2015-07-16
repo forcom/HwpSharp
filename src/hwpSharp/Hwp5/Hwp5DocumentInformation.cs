@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using hwpSharp.Common;
-using hwpSharp.Hwp5.DataRecords;
+using hwpSharp.Hwp5.DataRecords.DocumentInformation;
 using hwpSharp.Hwp5.HwpType;
 using OpenMcdf;
 
