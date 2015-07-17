@@ -22,9 +22,10 @@ namespace hwpSharp.Hwp5.BodyText
         internal Section(CFStream stream, Hwp5DocumentInformation docInfo)
         {
             DocumentInformation = docInfo;
+            Paragraphs = new List<Paragraph>();
 
             var bytes = Hwp5Document.GetRawBytesFromStream(stream, docInfo.FileHeader);
-            var records = DataRecord.GetRecordsFromBytes(bytes);
+            var records = DataRecord.GetRecordsFromBytes(bytes, docInfo);
 
             var initRecords = new List<DataRecord>();
             foreach (var record in records)

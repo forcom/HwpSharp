@@ -43,8 +43,7 @@ namespace hwpSharp.Hwp5.HwpType
                 tag = TagEnum.Unknown;
             }
 
-            // 10 bits for level, but 0 <= level <= 3 in the spec.
-            var level = headerBytes[2] & 0xf;
+            var level = ((headerBytes[2] & 0xf) << 6) + (headerBytes[1] >> 2);
 
             Dword size = (uint) (headerBytes[3]*0x10u + (headerBytes[2] >> 4));
 

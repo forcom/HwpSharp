@@ -9,8 +9,8 @@ namespace hwpSharp.Hwp5.DataRecords.BodyText
 
         public ParagraphTextDataRecord(Dword size, byte[] bytes)
         {
-            Tag = TagEnum.ParagraphHeader;
-            Level = 0;
+            Tag = TagEnum.ParagraphText;
+            Level = 1;
             Size = size;
 
             ParseRecord(bytes);
