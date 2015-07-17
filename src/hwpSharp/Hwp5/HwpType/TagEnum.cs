@@ -1,4 +1,4 @@
-﻿namespace hwpSharp.Hwp5.HwpType
+﻿namespace HwpSharp.Hwp5.HwpType
 {
     /// <summary>
     /// Specifies a tag ID of a hwp 5 data record.

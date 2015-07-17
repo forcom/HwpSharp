@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using hwpSharp.Common;
-using hwpSharp.Hwp5.DataRecords.BodyText;
-using hwpSharp.Hwp5.DataRecords.DocumentInformation;
+using HwpSharp.Common;
+using HwpSharp.Hwp5.DataRecords.BodyText;
+using HwpSharp.Hwp5.DataRecords.DocumentInformation;
 
-namespace hwpSharp.Hwp5.HwpType
+namespace HwpSharp.Hwp5.HwpType
 {
     /// <summary>
     /// Represents a data record of hwp 5 document.

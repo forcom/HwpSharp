@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.IO.Compression;
-using hwpSharp.Common;
+using HwpSharp.Common;
 using OpenMcdf;
 
-namespace hwpSharp.Hwp5
+namespace HwpSharp.Hwp5
 {
     /// <summary>
     /// Represents a hwp 5.0 document.

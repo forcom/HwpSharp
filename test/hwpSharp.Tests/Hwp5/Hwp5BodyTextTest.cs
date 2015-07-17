@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using hwpSharp.Hwp5;
+using HwpSharp.Hwp5;
 using Xunit;
 
-namespace hwpSharp.Tests.Hwp5
+namespace HwpSharp.Tests.Hwp5
 {
     public class Hwp5BodyTextTest
     {

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using hwpSharp.Common;
-using hwpSharp.Hwp5.HwpType;
+using HwpSharp.Common;
+using HwpSharp.Hwp5.HwpType;
 
-namespace hwpSharp.Hwp5.DataRecords.BodyText
+namespace HwpSharp.Hwp5.DataRecords.BodyText
 {
     public class ParagraphHeaderDataRecord : DataRecord
     {

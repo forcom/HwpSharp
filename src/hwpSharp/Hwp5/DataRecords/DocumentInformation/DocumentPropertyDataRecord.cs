@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using hwpSharp.Common;
-using hwpSharp.Hwp5.HwpType;
+using HwpSharp.Common;
+using HwpSharp.Hwp5.HwpType;
 
-namespace hwpSharp.Hwp5.DataRecords.DocumentInformation
+namespace HwpSharp.Hwp5.DataRecords.DocumentInformation
 {
     public class DocumentPropertyDataRecord : DataRecord
     {

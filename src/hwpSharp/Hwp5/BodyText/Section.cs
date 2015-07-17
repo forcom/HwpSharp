@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using hwpSharp.Hwp5.HwpType;
+using HwpSharp.Hwp5.HwpType;
 using OpenMcdf;
 
-namespace hwpSharp.Hwp5.BodyText
+namespace HwpSharp.Hwp5.BodyText
 {
     public class Section
     {

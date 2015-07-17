@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
-using hwpSharp.Common;
-using hwpSharp.Hwp5.DataRecords.DocumentInformation;
-using hwpSharp.Hwp5.HwpType;
+using HwpSharp.Common;
+using HwpSharp.Hwp5.DataRecords.DocumentInformation;
+using HwpSharp.Hwp5.HwpType;
 using OpenMcdf;
 
-namespace hwpSharp.Hwp5
+namespace HwpSharp.Hwp5
 {
     /// <summary>
     /// Represents a hwp 5.0 document information.

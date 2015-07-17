@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace hwpSharp.Hwp5.HwpType
+namespace HwpSharp.Hwp5.HwpType
 {
     /// <summary>
     ///     Unsigned 1 byte (0-255).

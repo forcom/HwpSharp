@@ -1,9 +1,9 @@
 ﻿using System.IO;
 using System.Linq;
-using hwpSharp.Common;
-using hwpSharp.Hwp5;
+using HwpSharp.Common;
+using HwpSharp.Hwp5;
 
-namespace hwpSharp
+namespace HwpSharp
 {
     /// <summary>
     /// Represents a Hwp document reader.

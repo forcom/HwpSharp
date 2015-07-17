@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace hwpSharp.Common
+namespace HwpSharp.Common
 {
     /// <summary>
     /// The exception that is thrown when a file or stream does not contains a HWP document, or HwpSharp cannot recognized a HWP document.

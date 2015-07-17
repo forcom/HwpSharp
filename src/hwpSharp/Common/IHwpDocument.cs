@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace hwpSharp.Common
+namespace HwpSharp.Common
 {
     /// <summary>
     /// Represents a Hwp document.

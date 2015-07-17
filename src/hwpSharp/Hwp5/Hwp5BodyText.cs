@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using hwpSharp.Common;
-using hwpSharp.Hwp5.BodyText;
+using HwpSharp.Common;
+using HwpSharp.Hwp5.BodyText;
 using OpenMcdf;
 
-namespace hwpSharp.Hwp5
+namespace HwpSharp.Hwp5
 {
     /// <summary>
     /// Represents a hwp 5.0 body text.

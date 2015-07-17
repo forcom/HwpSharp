@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using hwpSharp.Common;
+using HwpSharp.Common;
 
-namespace hwpSharp.Hwp5
+namespace HwpSharp.Hwp5
 {
     /// <summary>
     /// Represents a hwp 5.0 summary information.

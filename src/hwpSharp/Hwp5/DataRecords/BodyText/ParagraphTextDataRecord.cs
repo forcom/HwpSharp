@@ -1,7 +1,7 @@
 ﻿using System.Text;
-using hwpSharp.Hwp5.HwpType;
+using HwpSharp.Hwp5.HwpType;
 
-namespace hwpSharp.Hwp5.DataRecords.BodyText
+namespace HwpSharp.Hwp5.DataRecords.BodyText
 {
     public class ParagraphTextDataRecord : DataRecord
     {

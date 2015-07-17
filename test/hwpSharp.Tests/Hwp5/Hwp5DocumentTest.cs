@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
-using hwpSharp.Common;
-using hwpSharp.Hwp5;
+using HwpSharp.Common;
+using HwpSharp.Hwp5;
 using Xunit;
 
-namespace hwpSharp.Tests.Hwp5
+namespace HwpSharp.Tests.Hwp5
 {
     public class Hwp5DocumentTest
     {

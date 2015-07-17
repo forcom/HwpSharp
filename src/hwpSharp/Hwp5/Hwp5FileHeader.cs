@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
-using hwpSharp.Common;
+using HwpSharp.Common;
 using OpenMcdf;
 
-namespace hwpSharp.Hwp5
+namespace HwpSharp.Hwp5
 {
     /// <summary>
     /// Represents a hwp 5.0 file header.
