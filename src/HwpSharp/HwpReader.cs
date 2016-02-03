@@ -53,7 +53,7 @@ namespace HwpSharp
             var fileType = GetFileType(stream);
             if (fileType == FileType.CompoundFile)
             {
-                return new Hwp5Document(stream);
+                return new Document(stream);
             }
             throw new HwpFileFormatException("File type is imcompatible.");
         }

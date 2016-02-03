@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace HwpSharp.Hwp5.HwpType
@@ -7,6 +8,8 @@ namespace HwpSharp.Hwp5.HwpType
     /// <summary>
     ///     Unsigned 1 byte (0-255).
     /// </summary>
+    [DebuggerDisplay("{_value}")]
+    [DebuggerTypeProxy(typeof(byte))]
     public struct Byte
     {
         private readonly byte _value;
@@ -35,11 +38,18 @@ namespace HwpSharp.Hwp5.HwpType
         {
             return value._value;
         }
+
+        public override string ToString()
+        {
+            return _value.ToString();
+        }
     }
 
     /// <summary>
     ///     'unsigned int' on the 16bit compiler.
     /// </summary>
+    [DebuggerDisplay("{_value}")]
+    [DebuggerTypeProxy(typeof(ushort))]
     public struct Word
     {
         private readonly ushort _value;
@@ -68,77 +78,98 @@ namespace HwpSharp.Hwp5.HwpType
         {
             return value._value;
         }
+
+        public override string ToString()
+        {
+            return _value.ToString();
+        }
     }
 
     /// <summary>
     ///     'unsigned long' on the 16bit compiler.
     /// </summary>
-    public struct Dword
+    [DebuggerDisplay("{_value}")]
+    [DebuggerTypeProxy(typeof(uint))]
+    public struct DWord
     {
         private readonly uint _value;
 
-        private Dword(uint value)
+        private DWord(uint value)
         {
             _value = value;
         }
 
         /// <summary>
-        ///     Implicitly converts a <see cref="uint" /> to a <see cref="Dword" />.
+        ///     Implicitly converts a <see cref="uint" /> to a <see cref="DWord" />.
         /// </summary>
         /// <param name="value">The <see cref="uint" /> to convert.</param>
-        /// <returns>A new <see cref="Dword" /> with the specified value.</returns>
-        public static implicit operator Dword(uint value)
+        /// <returns>A new <see cref="DWord" /> with the specified value.</returns>
+        public static implicit operator DWord(uint value)
         {
-            return new Dword(value);
+            return new DWord(value);
         }
 
         /// <summary>
-        ///     Implicitly converts a <see cref="Dword" /> to a <see cref="uint" />.
+        ///     Implicitly converts a <see cref="DWord" /> to a <see cref="uint" />.
         /// </summary>
-        /// <param name="value">The <see cref="Dword" /> to convert.</param>
-        /// <returns>A <see cref="uint" /> that is the specified <see cref="Dword" />'s value.</returns>
-        public static implicit operator uint(Dword value)
+        /// <param name="value">The <see cref="DWord" /> to convert.</param>
+        /// <returns>A <see cref="uint" /> that is the specified <see cref="DWord" />'s value.</returns>
+        public static implicit operator uint(DWord value)
         {
             return value._value;
+        }
+
+        public override string ToString()
+        {
+            return _value.ToString();
         }
     }
 
     /// <summary>
     ///     Unicode based character, default code in HWP.
     /// </summary>
-    public struct Wchar
+    [DebuggerDisplay("{_value}")]
+    [DebuggerTypeProxy(typeof(char))]
+    public struct WChar
     {
         private readonly char _value;
 
-        private Wchar(char value)
+        private WChar(char value)
         {
             _value = value;
         }
 
         /// <summary>
-        ///     Implicitly converts a <see cref="char" /> to a <see cref="Wchar" />.
+        ///     Implicitly converts a <see cref="char" /> to a <see cref="WChar" />.
         /// </summary>
         /// <param name="value">The <see cref="char" /> to convert.</param>
-        /// <returns>A new <see cref="Wchar" /> with the specified value.</returns>
-        public static implicit operator Wchar(char value)
+        /// <returns>A new <see cref="WChar" /> with the specified value.</returns>
+        public static implicit operator WChar(char value)
         {
-            return new Wchar(value);
+            return new WChar(value);
         }
 
         /// <summary>
-        ///     Implicitly converts a <see cref="Wchar" /> to a <see cref="char" />.
+        ///     Implicitly converts a <see cref="WChar" /> to a <see cref="char" />.
         /// </summary>
-        /// <param name="value">The <see cref="Wchar" /> to convert.</param>
-        /// <returns>A <see cref="char" /> that is the specified <see cref="Wchar" />'s value.</returns>
-        public static implicit operator char(Wchar value)
+        /// <param name="value">The <see cref="WChar" /> to convert.</param>
+        /// <returns>A <see cref="char" /> that is the specified <see cref="WChar" />'s value.</returns>
+        public static implicit operator char(WChar value)
         {
             return value._value;
+        }
+
+        public override string ToString()
+        {
+            return _value.ToString();
         }
     }
 
     /// <summary>
     ///     HWP internal unit, represented as 1/1700 inch.
     /// </summary>
+    [DebuggerDisplay("{_value}")]
+    [DebuggerTypeProxy(typeof(uint))]
     public struct HwpUnit
     {
         private readonly uint _value;
@@ -167,11 +198,18 @@ namespace HwpSharp.Hwp5.HwpType
         {
             return value._value;
         }
+
+        public override string ToString()
+        {
+            return _value.ToString();
+        }
     }
 
     /// <summary>
     ///     HWP internal unit, represented as 1/1700 inch with sign.
     /// </summary>
+    [DebuggerDisplay("{_value}")]
+    [DebuggerTypeProxy(typeof(int))]
     public struct SHwpUnit
     {
         private readonly int _value;
@@ -200,11 +238,18 @@ namespace HwpSharp.Hwp5.HwpType
         {
             return value._value;
         }
+
+        public override string ToString()
+        {
+            return _value.ToString();
+        }
     }
 
     /// <summary>
     ///     'unsigned __int8'
     /// </summary>
+    [DebuggerDisplay("{_value}")]
+    [DebuggerTypeProxy(typeof(byte))]
     public struct UInt8
     {
         private readonly byte _value;
@@ -233,11 +278,18 @@ namespace HwpSharp.Hwp5.HwpType
         {
             return value._value;
         }
+
+        public override string ToString()
+        {
+            return _value.ToString();
+        }
     }
 
     /// <summary>
     ///     'unsigned __int16'
     /// </summary>
+    [DebuggerDisplay("{_value}")]
+    [DebuggerTypeProxy(typeof(ushort))]
     public struct UInt16
     {
         private readonly ushort _value;
@@ -266,11 +318,18 @@ namespace HwpSharp.Hwp5.HwpType
         {
             return value._value;
         }
+
+        public override string ToString()
+        {
+            return _value.ToString();
+        }
     }
 
     /// <summary>
     ///     'unsigned __int32'
     /// </summary>
+    [DebuggerDisplay("{_value}")]
+    [DebuggerTypeProxy(typeof(uint))]
     public struct UInt32
     {
         private readonly uint _value;
@@ -299,11 +358,18 @@ namespace HwpSharp.Hwp5.HwpType
         {
             return value._value;
         }
+
+        public override string ToString()
+        {
+            return _value.ToString();
+        }
     }
 
     /// <summary>
     ///     'signed __int8'
     /// </summary>
+    [DebuggerDisplay("{_value}")]
+    [DebuggerTypeProxy(typeof(sbyte))]
     public struct Int8
     {
         private readonly sbyte _value;
@@ -332,11 +398,18 @@ namespace HwpSharp.Hwp5.HwpType
         {
             return value._value;
         }
+
+        public override string ToString()
+        {
+            return _value.ToString();
+        }
     }
 
     /// <summary>
     ///     'signed __int16'
     /// </summary>
+    [DebuggerDisplay("{_value}")]
+    [DebuggerTypeProxy(typeof(short))]
     public struct Int16
     {
         private readonly short _value;
@@ -365,11 +438,18 @@ namespace HwpSharp.Hwp5.HwpType
         {
             return value._value;
         }
+
+        public override string ToString()
+        {
+            return _value.ToString();
+        }
     }
 
     /// <summary>
     ///     'signed __int32'
     /// </summary>
+    [DebuggerDisplay("{_value}")]
+    [DebuggerTypeProxy(typeof(int))]
     public struct Int32
     {
         private readonly int _value;
@@ -398,11 +478,18 @@ namespace HwpSharp.Hwp5.HwpType
         {
             return value._value;
         }
+
+        public override string ToString()
+        {
+            return _value.ToString();
+        }
     }
 
     /// <summary>
     ///     Same as INT16
     /// </summary>
+    [DebuggerDisplay("{_value}")]
+    [DebuggerTypeProxy(typeof(short))]
     public struct HwpUnit16
     {
         private readonly short _value;
@@ -431,57 +518,68 @@ namespace HwpSharp.Hwp5.HwpType
         {
             return value._value;
         }
+
+        public override string ToString()
+        {
+            return _value.ToString();
+        }
     }
 
     /// <summary>
     ///     Represents RGB value(0x00bbggrr) as decimal.
     /// </summary>
-    public struct ColorRef
+    [DebuggerDisplay("({Red}, {Green}, {Blue})")]
+    public struct Color
     {
         public byte Red { get; }
         public byte Green { get; }
         public byte Blue { get; }
 
-        private ColorRef(uint value)
+        private Color(uint value)
         {
             Red = (byte) (value & 0xff);
             Green = (byte) ((value >> 8) & 0xff);
             Blue = (byte) ((value >> 16) & 0xff);
         }
 
-        public ColorRef(byte rr, byte gg, byte bb)
+        public Color(byte r, byte g, byte b)
         {
-            Red = rr;
-            Green = gg;
-            Blue = bb;
+            Red = r;
+            Green = g;
+            Blue = b;
         }
 
         /// <summary>
-        ///     Implicitly converts a <see cref="uint" /> to a <see cref="ColorRef" />.
+        ///     Implicitly converts a <see cref="uint" /> to a <see cref="Color" />.
         /// </summary>
         /// <param name="value">The <see cref="uint" /> to convert.</param>
-        /// <returns>A new <see cref="ColorRef" /> with the specified value.</returns>
-        public static implicit operator ColorRef(uint value)
+        /// <returns>A new <see cref="Color" /> with the specified value.</returns>
+        public static implicit operator Color(uint value)
         {
-            return new ColorRef(value);
+            return new Color(value);
         }
 
         /// <summary>
-        ///     Implicitly converts a <see cref="ColorRef" /> to a <see cref="uint" />.
+        ///     Implicitly converts a <see cref="Color" /> to a <see cref="uint" />.
         /// </summary>
-        /// <param name="value">The <see cref="ColorRef" /> to convert.</param>
-        /// <returns>A <see cref="uint" /> that is the specified <see cref="ColorRef" />'s value.</returns>
-        public static implicit operator uint(ColorRef value)
+        /// <param name="value">The <see cref="Color" /> to convert.</param>
+        /// <returns>A <see cref="uint" /> that is the specified <see cref="Color" />'s value.</returns>
+        public static implicit operator uint(Color value)
         {
             return value.Red + value.Green*0x100u + value.Blue*0x10000u;
+        }
+
+        public override string ToString()
+        {
+            return $"({Red}, {Green}, {Blue})";
         }
     }
 
     public static class ByteArrayConverter
     {
-        public static Word ToWord(this IEnumerable<byte> bytes)
+        public static Word ToWord(this IEnumerable<byte> bytes, int offset = 0)
         {
-            var arr = bytes.Take(2).ToArray();
+            var arr = bytes.Skip(offset).Take(2).ToArray();
             if (arr.Length < 2)
             {
                 throw new ArgumentOutOfRangeException(nameof(bytes), "Word needs at least 2 bytes.");
@@ -490,31 +588,31 @@ namespace HwpSharp.Hwp5.HwpType
             return (ushort) (arr[0] + arr[1]*0x100u);
         }
 
-        public static Dword ToDword(this IEnumerable<byte> bytes)
+        public static DWord ToDWord(this IEnumerable<byte> bytes, int offset = 0)
         {
-            var arr = bytes.Take(4).ToArray();
+            var arr = bytes.Skip(offset).Take(4).ToArray();
             if (arr.Length < 4)
             {
-                throw new ArgumentOutOfRangeException(nameof(bytes), "Dword needs at least 4 bytes.");
+                throw new ArgumentOutOfRangeException(nameof(bytes), "DWord needs at least 4 bytes.");
             }
 
             return arr[0] + arr[1]*0x100u + arr[2]*0x10000u + arr[3]*0x1000000u;
         }
 
-        public static Wchar ToWchar(this IEnumerable<byte> bytes)
+        public static WChar ToWChar(this IEnumerable<byte> bytes, int offset = 0)
         {
-            var arr = bytes.Take(2).ToArray();
+            var arr = bytes.Skip(offset).Take(2).ToArray();
             if (arr.Length < 2)
             {
-                throw new ArgumentOutOfRangeException(nameof(bytes), "Wchar needs at least 2 bytes.");
+                throw new ArgumentOutOfRangeException(nameof(bytes), "WChar needs at least 2 bytes.");
             }
 
             return (char) (arr[0] + arr[1]*0x100u);
         }
 
-        public static HwpUnit ToHwpUnit(this IEnumerable<byte> bytes)
+        public static HwpUnit ToHwpUnit(this IEnumerable<byte> bytes, int offset = 0)
         {
-            var arr = bytes.Take(4).ToArray();
+            var arr = bytes.Skip(offset).Take(4).ToArray();
             if (arr.Length < 4)
             {
                 throw new ArgumentOutOfRangeException(nameof(bytes), "HwpUnit needs at least 4 bytes.");
@@ -523,9 +621,9 @@ namespace HwpSharp.Hwp5.HwpType
             return arr[0] + arr[1]*0x100u + arr[2]*0x10000u + arr[3]*0x1000000u;
         }
 
-        public static SHwpUnit ToSHwpUnit(this IEnumerable<byte> bytes)
+        public static SHwpUnit ToSHwpUnit(this IEnumerable<byte> bytes, int offset = 0)
         {
-            var arr = bytes.Take(4).ToArray();
+            var arr = bytes.Skip(offset).Take(4).ToArray();
             if (arr.Length < 4)
             {
                 throw new ArgumentOutOfRangeException(nameof(bytes), "SHwpUnit needs at least 4 bytes.");
@@ -534,9 +632,9 @@ namespace HwpSharp.Hwp5.HwpType
             return arr[0] + arr[1]*0x100 + arr[2]*0x10000 + arr[3]*0x1000000;
         }
 
-        public static UInt16 ToUInt16(this IEnumerable<byte> bytes)
+        public static UInt16 ToUInt16(this IEnumerable<byte> bytes, int offset = 0)
         {
-            var arr = bytes.Take(2).ToArray();
+            var arr = bytes.Skip(offset).Take(2).ToArray();
             if (arr.Length < 2)
             {
                 throw new ArgumentOutOfRangeException(nameof(bytes), "UInt16 needs at least 2 bytes.");
@@ -545,9 +643,9 @@ namespace HwpSharp.Hwp5.HwpType
             return (ushort) (arr[0] + arr[1]*0x100u);
         }
 
-        public static UInt32 ToUInt32(this IEnumerable<byte> bytes)
+        public static UInt32 ToUInt32(this IEnumerable<byte> bytes, int offset = 0)
         {
-            var arr = bytes.Take(4).ToArray();
+            var arr = bytes.Skip(offset).Take(4).ToArray();
             if (arr.Length < 4)
             {
                 throw new ArgumentOutOfRangeException(nameof(bytes), "UInt32 needs at least 4 bytes.");
@@ -556,9 +654,9 @@ namespace HwpSharp.Hwp5.HwpType
             return arr[0] + arr[1]*0x100u + arr[2]*0x10000u + arr[3]*0x1000000u;
         }
 
-        public static Int16 ToInt16(this IEnumerable<byte> bytes)
+        public static Int16 ToInt16(this IEnumerable<byte> bytes, int offset = 0)
         {
-            var arr = bytes.Take(2).ToArray();
+            var arr = bytes.Skip(offset).Take(2).ToArray();
             if (arr.Length < 2)
             {
                 throw new ArgumentOutOfRangeException(nameof(bytes), "Int16 needs at least 2 bytes.");
@@ -567,9 +665,9 @@ namespace HwpSharp.Hwp5.HwpType
             return (short) (arr[0] + arr[1]*0x100);
         }
 
-        public static Int32 ToInt32(this IEnumerable<byte> bytes)
+        public static Int32 ToInt32(this IEnumerable<byte> bytes, int offset = 0)
         {
-            var arr = bytes.Take(4).ToArray();
+            var arr = bytes.Skip(offset).Take(4).ToArray();
             if (arr.Length < 4)
             {
                 throw new ArgumentOutOfRangeException(nameof(bytes), "Int32 needs at least 4 bytes.");
@@ -578,9 +676,9 @@ namespace HwpSharp.Hwp5.HwpType
             return arr[0] + arr[1]*0x100 + arr[2]*0x10000 + arr[3]*0x1000000;
         }
 
-        public static HwpUnit16 ToHwpUnit16(this IEnumerable<byte> bytes)
+        public static HwpUnit16 ToHwpUnit16(this IEnumerable<byte> bytes, int offset = 0)
         {
-            var arr = bytes.Take(2).ToArray();
+            var arr = bytes.Skip(offset).Take(2).ToArray();
             if (arr.Length < 2)
             {
                 throw new ArgumentOutOfRangeException(nameof(bytes), "HwpUnit16 needs at least 2 bytes.");
@@ -589,15 +687,15 @@ namespace HwpSharp.Hwp5.HwpType
             return (short) (arr[0] + arr[1]*0x100);
         }
 
-        public static ColorRef ToColorRef(this IEnumerable<byte> bytes)
+        public static Color ToColor(this IEnumerable<byte> bytes, int offset = 0)
         {
-            var arr = bytes.Take(4).ToArray();
+            var arr = bytes.Skip(offset).Take(4).ToArray();
             if (arr.Length < 4)
             {
-                throw new ArgumentOutOfRangeException(nameof(bytes), "ColorRef needs at least 4 bytes.");
+                throw new ArgumentOutOfRangeException(nameof(bytes), "Color needs at least 4 bytes.");
             }
 
-            return new ColorRef(arr[0], arr[1], arr[2]);
+            return new Color(arr[0], arr[1], arr[2]);
         }
     }
 }

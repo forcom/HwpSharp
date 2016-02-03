@@ -8,7 +8,7 @@ namespace HwpSharp.Hwp5
     /// <summary>
     /// Represents a hwp 5.0 file header.
     /// </summary>
-    public class Hwp5FileHeader : IFileHeader
+    public class FileHeader : IFileHeader
     {
         private const int SignatureLength = 32;
         private static readonly byte[] SignatureBytes =
@@ -88,14 +88,14 @@ namespace HwpSharp.Hwp5
         public bool CclDocumented { get; set; }
 
         /// <summary>
-        /// Creates a <see cref="Hwp5FileHeader"/> instance with a blank setting.
+        /// Creates a <see cref="FileHeader"/> instance with a blank setting.
         /// </summary>
-        public Hwp5FileHeader()
+        public FileHeader()
         {
             FileVersion = new Version(5, 0, 0, 0);
         }
 
-        internal Hwp5FileHeader(CFStream stream)
+        internal FileHeader(CFStream stream)
         {
             SetFileHeader(stream);
         }

@@ -1,26 +1,25 @@
 ﻿using System.Collections.Generic;
 using HwpSharp.Common;
-using HwpSharp.Hwp5.BodyText;
 using OpenMcdf;
 
-namespace HwpSharp.Hwp5
+namespace HwpSharp.Hwp5.BodyText
 {
     /// <summary>
     /// Represents a hwp 5.0 body text.
     /// </summary>
-    public class Hwp5BodyText : IBodyText
+    public class BodyText : IBodyText
     {
-        public Hwp5DocumentInformation DocumentInformation { get; private set; }
+        public DocumentInformation.DocumentInformation DocumentInformation { get; private set; }
 
         public List<Section> Sections { get; }
 
-        public Hwp5BodyText(Hwp5DocumentInformation docInfo)
+        public BodyText(DocumentInformation.DocumentInformation docInfo)
         {
             DocumentInformation = docInfo;
             Sections = new List<Section>();
         }
 
-        internal Hwp5BodyText(CFStorage storage, Hwp5DocumentInformation docInfo)
+        internal BodyText(CFStorage storage, DocumentInformation.DocumentInformation docInfo)
         {
             DocumentInformation = docInfo;
             Sections = new List<Section>();

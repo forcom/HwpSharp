@@ -1,0 +1,20 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "HwpSharp.Tests.Console Console Application",
+  "authors": [ "Y" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "dependencies": {
+    "HwpSharp": "1.0.0-*"
+  },
+
+  "commands": {
+    "HwpSharp.Tests.Console": "HwpSharp.Tests.Console"
+  },
+
+  "frameworks": {
+    "dnx451": { }
+  }
+}

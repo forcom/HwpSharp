@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using HwpSharp.Common;
 using HwpSharp.Hwp5.HwpType;
 
-namespace HwpSharp.Hwp5.DataRecords.BodyText
+namespace HwpSharp.Hwp5.BodyText.DataRecords
 {
-    public class ParagraphHeaderDataRecord : DataRecord
+    public class ParagraphHeader : DataRecord
     {
+        public const uint ParagraphHeaderTagId = HwpTagBegin + 50;
+
         [Flags]
         public enum ColumnKind : byte
         {
@@ -30,16 +28,9 @@ namespace HwpSharp.Hwp5.DataRecords.BodyText
         public HwpType.UInt32 ParagraphId { get; set; }
         public HwpType.UInt16 HistoryMergeParagraphFlag { get; set; }
 
-        public ParagraphHeaderDataRecord(Dword size, byte[] bytes, Hwp5DocumentInformation docInfo)
-        {
-            Tag = TagEnum.ParagraphHeader;
-            Level = 0;
-            Size = size;
-
-            ParseRecord(bytes, docInfo);
-        }
-
-        private void ParseRecord(byte[] bytes, Hwp5DocumentInformation docInfo)
+        public ParagraphHeader(uint level, byte[] bytes,
+            DocumentInformation.DocumentInformation docInfo = null)
+            : base(ParagraphHeaderTagId, level, (uint) bytes.Length)
         {
             Length = bytes.ToUInt32();
             if ((Length & 0x80000000u) != 0)
@@ -47,12 +38,10 @@ namespace HwpSharp.Hwp5.DataRecords.BodyText
                 Length &= 0x7fffffffu;
             }
 
-            ControlMask = bytes.Skip(4).ToUInt32();
+            ControlMask = bytes.ToUInt32(4);
+            
+            ParagraphShapeId = bytes.ToUInt16(8);
 
-            // TODO : Replace ID with ParagraphShapeDataRecord
-            ParagraphShapeId = bytes.Skip(8).ToUInt16();
-
-            // TODO : Replace ID with StyleDataRecord
             ParagraphStyleId = bytes[10];
 
             ColumnKind columnKind;
@@ -62,17 +51,17 @@ namespace HwpSharp.Hwp5.DataRecords.BodyText
             }
             ColumnType = columnKind;
 
-            CharacterShapeCount = bytes.Skip(12).ToUInt16();
+            CharacterShapeCount = bytes.ToUInt16(12);
 
-            ParagraphRangeCount = bytes.Skip(14).ToUInt16();
+            ParagraphRangeCount = bytes.ToUInt16(14);
 
-            LineAlignCount = bytes.Skip(16).ToUInt16();
+            LineAlignCount = bytes.ToUInt16(16);
 
-            ParagraphId = bytes.Skip(18).ToUInt32();
+            ParagraphId = bytes.ToUInt32(18);
 
             if (bytes.Length >= 24)
             {
-                HistoryMergeParagraphFlag = bytes.Skip(22).ToUInt16();
+                HistoryMergeParagraphFlag = bytes.ToUInt16(22);
             }
         }
     }

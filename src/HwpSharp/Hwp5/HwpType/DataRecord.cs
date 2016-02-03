@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using HwpSharp.Common;
-using HwpSharp.Hwp5.DataRecords.BodyText;
-using HwpSharp.Hwp5.DataRecords.DocumentInformation;
+using HwpSharp.Hwp5.BodyText.DataRecords;
+using HwpSharp.Hwp5.DocumentInformation.DataRecords;
 
 namespace HwpSharp.Hwp5.HwpType
 {
@@ -17,99 +17,103 @@ namespace HwpSharp.Hwp5.HwpType
         /// <summary>
         /// Gets the tag id of data record.
         /// </summary>
-        public TagEnum Tag { get; internal set; }
+        public uint TagId { get; internal set; }
 
         /// <summary>
         /// Gets the level of data record.
         /// </summary>
-        public int Level { get; internal set; }
+        public uint Level { get; internal set; }
 
         /// <summary>
         /// Gets the size of data record.
         /// </summary>
-        public Dword Size { get; internal set; }
+        public DWord Size { get; internal set; }
 
-        internal static DataRecord ParseHeaderBytes(byte[] headerBytes)
+        protected DataRecord(uint tagId, uint level, DWord size)
         {
-            if (headerBytes == null)
-            {
-                throw new ArgumentNullException(nameof(headerBytes));
-            }
-
-            TagEnum tag;
-            var tagParsed = Enum.TryParse($"{(headerBytes[1] & 0x3)*0x100 + headerBytes[0]}", out tag);
-            if (!tagParsed)
-            {
-                tag = TagEnum.Unknown;
-            }
-
-            var level = ((headerBytes[2] & 0xf) << 6) + (headerBytes[1] >> 2);
-
-            Dword size = (uint) (headerBytes[3]*0x10u + (headerBytes[2] >> 4));
-
-            return new DataRecordImpl(tag, level, size);
+            TagId = tagId;
+            Level = level;
+            Size = size;
         }
 
-        internal static DataRecord CreateRecordFromHeader(DataRecord header, byte[] bytes, Hwp5DocumentInformation docInfo = null)
-        {
-            switch (header.Tag)
-            {
-                case TagEnum.DocumentProperties:
-                    return new DocumentPropertyDataRecord(header.Size, bytes);
-                case TagEnum.ParagraphHeader:
-                    if (docInfo == null)
-                    {
-                        throw new ArgumentNullException($"{nameof(docInfo)} is required to create a ParagraphHeaderDataRecord instance.");
-                    }
-                    return new ParagraphHeaderDataRecord(header.Size, bytes, docInfo);
-                case TagEnum.ParagraphText:
-                    return new ParagraphTextDataRecord(header.Size, bytes);
-                default:
-                    return null;
-            }
-        }
-
-        internal static IEnumerable<DataRecord> GetRecordsFromBytes(byte[] bytes, Hwp5DocumentInformation docInfo = null)
+        internal static IEnumerable<DataRecord> GetRecordsFromBytes(byte[] bytes, DocumentInformation.DocumentInformation docInfo = null)
         {
             var records = new List<DataRecord>();
 
             var pos = 0;
             while (pos < bytes.Length)
             {
-                if (pos + 4 > bytes.Length)
+                var header = bytes.ToDWord(pos);
+                pos += 4;
+
+                var tagId = header & 0x3FF;
+                var level = (header >> 10) & 0x3FF;
+                var size = header >> 20;
+                if (size == 0xfff)
                 {
-                    throw new HwpCorruptedDataRecordException("Unable to read data record header.");
+                    size = bytes.ToDWord(pos);
+                    pos += 4;
                 }
 
-                var headerBytes = bytes.Skip(pos).Take(4).ToArray();
-                var header = ParseHeaderBytes(headerBytes);
-                pos += 4;
-                if (header.Size == 0xfff)
-                {
-                    header.Size = bytes.Skip(pos).ToDword();
-                }
-                var recordBytes = bytes.Skip(pos).Take((int) (uint) header.Size).ToArray();
-                var record = CreateRecordFromHeader(header, recordBytes, docInfo);
+                var recordBytes = bytes.Skip(pos).Take((int) size).ToArray();
+                pos += (int) size;
+                var record = DataRecordFactory.Create(tagId, level, recordBytes, docInfo);
 
                 if (record != null)
                 {
                     records.Add(record);
                 }
-
-                pos += (int) (uint) header.Size;
             }
 
             return records;
         }
     }
 
+    public static class DataRecordFactory
+    {
+        private static readonly Dictionary<uint, Type> DataRecordTypes = new Dictionary<uint, Type>
+        {
+            {DocumentProperty.DocumentPropertiesTagId, typeof (DocumentProperty)},
+            {IdMapping.IdMappingsTagId, typeof (IdMapping)},
+            {BinData.BinDataTagId, typeof (BinData)},
+            {FaceName.FaceNameTagId, typeof (FaceName)},
+            {BorderFill.BorderFillTagId, typeof (BorderFill)},
+
+            {ParagraphHeader.ParagraphHeaderTagId, typeof (ParagraphHeader)},
+            {ParagraphText.ParagraphTextTagId, typeof (ParagraphText)},
+        };
+
+        public static void RegisterType(uint tagId, Type type)
+        {
+            DataRecordTypes[tagId] = type;
+        }
+
+        public static DataRecord Create(uint tagId, uint level, byte[] data, DocumentInformation.DocumentInformation docInfo = null)
+        {
+            if (!DataRecordTypes.ContainsKey(tagId))
+            {
+                return new DataRecordImpl(tagId, level, data);
+            }
+
+            var ctor =
+                DataRecordTypes[tagId].GetConstructor(new[]
+                {typeof (uint), typeof (byte[]), typeof (DocumentInformation.DocumentInformation)});
+            if (ctor == null)
+            {
+                throw new HwpDataRecordConstructorException();
+            }
+            return ctor.Invoke(new object[] {level, data, docInfo}) as DataRecord;
+        }
+    }
+
     internal class DataRecordImpl : DataRecord
     {
-        public DataRecordImpl(TagEnum tag, int level, Dword size)
+        public byte[] Data { get; private set; }
+
+        public DataRecordImpl(uint tagId, uint level, byte[] data = null)
+            : base(tagId, level, (uint) (data?.Length ?? 0))
         {
-            Tag = tag;
-            Level = level;
-            Size = size;
+            Data = data;
         }
     }
 }

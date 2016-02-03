@@ -164,4 +164,12 @@ namespace HwpSharp.Common
         {
         }
     }
+
+    public class HwpDataRecordConstructorException : Exception
+    {
+    }
+
+    public class HwpUnsupportedProperty : Exception
+    {
+    }
 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.22823.1
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6DA16CB8-1D96-4C11-AC54-5210A16E8AD6}"
 EndProject
@@ -46,6 +46,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hwp5", "Hwp5", "{8D356E47-A
 		test\case\Hwp5\Worldcup_FIFA2010_32.hwp = test\case\Hwp5\Worldcup_FIFA2010_32.hwp
 	EndProjectSection
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "HwpSharp.Tests.Console", "test\HwpSharp.Tests.Console\HwpSharp.Tests.Console.xproj", "{D0E23E50-7881-4442-8E44-73300A7F6D9F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -60,6 +62,10 @@ Global
 		{07196994-8FEF-417A-9144-05135AA6497A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07196994-8FEF-417A-9144-05135AA6497A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07196994-8FEF-417A-9144-05135AA6497A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0E23E50-7881-4442-8E44-73300A7F6D9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0E23E50-7881-4442-8E44-73300A7F6D9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0E23E50-7881-4442-8E44-73300A7F6D9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0E23E50-7881-4442-8E44-73300A7F6D9F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,5 +75,6 @@ Global
 		{07196994-8FEF-417A-9144-05135AA6497A} = {99B07E9B-510B-4884-B486-042DC09B333E}
 		{C1C298A2-EFDC-406B-A9B3-FC671F8EDD76} = {99B07E9B-510B-4884-B486-042DC09B333E}
 		{8D356E47-AFA9-4915-B50A-A5AB3573ED0A} = {C1C298A2-EFDC-406B-A9B3-FC671F8EDD76}
+		{D0E23E50-7881-4442-8E44-73300A7F6D9F} = {99B07E9B-510B-4884-B486-042DC09B333E}
 	EndGlobalSection
 EndGlobal
