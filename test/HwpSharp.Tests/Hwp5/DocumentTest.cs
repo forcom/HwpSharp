@@ -6,7 +6,7 @@ using Xunit;
 
 namespace HwpSharp.Tests.Hwp5
 {
-    public class Hwp5DocumentTest
+    public class DocumentTest
     {
         [Theory]
         [InlineData(@"../case/CompoundFile.xls", typeof(HwpFileFormatException), "Specified document does not have a FileHeader field.")]
@@ -18,7 +18,7 @@ namespace HwpSharp.Tests.Hwp5
         {
             var ex = Record.Exception(() =>
             {
-                new Hwp5Document(filename);
+                new Document(filename);
             });
 
             Assert.IsType(expectedException, ex);
@@ -35,7 +35,7 @@ namespace HwpSharp.Tests.Hwp5
             var ex = Record.Exception(() =>
             {
                 var stream = filename != null ? new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite) : null;
-                new Hwp5Document(stream);
+                new Document(stream);
             });
 
             Assert.IsType(expectedException, ex);

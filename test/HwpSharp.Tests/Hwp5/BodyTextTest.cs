@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HwpSharp.Hwp5;
+using HwpSharp.Hwp5.BodyText.DataRecords;
+using HwpSharp.Hwp5.HwpType;
 using Xunit;
 
 namespace HwpSharp.Tests.Hwp5
 {
-    public class Hwp5BodyTextTest
+    public class BodyTextTest
     {
         [Theory]
         // [InlineData(@"../case/Hwp5/BlogForm_BookReview.hwp", null)]
@@ -31,9 +33,13 @@ namespace HwpSharp.Tests.Hwp5
         [InlineData(@"../case/Hwp5/multisection.hwp", "\u0002\u6364\u7365\0\0\0\0\u0002\u0002\u6c64\u636f\0\0\0\0\u0002\u0015\u6e70\u7067\0\0\0\0\u0015MultiSection 01\r")]
         public void ParagraphText_NormalHwp5Document(string filename, string expectedBodyText)
         {
-            var document = new Hwp5Document(filename);
+            var document = new Document(filename);
 
-            var paragraph = document.BodyText.Sections[0].Paragraphs[0].ParagraphText.Text;
+            var paragraph =
+                document.BodyText.Sections[0].DataRecords.Where(
+                    record => record.TagId == ParagraphText.ParagraphTextTagId)
+                    .Cast<ParagraphText>()
+                    .Aggregate("", (x, y) => x + y?.Text);
             Assert.Equal(expectedBodyText, paragraph);
         }
     }

@@ -3,7 +3,7 @@ using Xunit;
 
 namespace HwpSharp.Tests.Hwp5
 {
-    public class Hwp5DocumentInformationTest
+    public class DocumentInformationTest
     {
         [Theory]
         [InlineData(@"../case/Hwp5/BlogForm_BookReview.hwp", 1, 1)]
@@ -27,7 +27,7 @@ namespace HwpSharp.Tests.Hwp5
         [InlineData(@"../case/Hwp5/multisection.hwp", 3, 1)]
         public void DocumentProperty_NormalHwp5Document(string filename, ushort expectedSectionCount, ushort expectedStartPageNumber)
         {
-            var document = new Hwp5Document(filename);
+            var document = new Document(filename);
 
             Assert.Equal(expectedSectionCount, (ushort) document.DocumentInformation.DocumentProperty.SectionCount);
             Assert.Equal(expectedStartPageNumber, (ushort) document.DocumentInformation.DocumentProperty.StartPageNumber);

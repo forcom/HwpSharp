@@ -109,8 +109,8 @@ namespace HwpSharp.Hwp5
 
         private void ParseAttribute(CFStream stream)
         {
-            var readCount = AttributeLength;
-            var attributes = stream.GetData(36, ref readCount);
+            var attributes = new byte[AttributeLength];
+            var readCount = stream.Read(attributes, 36, AttributeLength);
 
             if (readCount != AttributeLength)
             {
@@ -133,8 +133,8 @@ namespace HwpSharp.Hwp5
 
         private void ParseFileVersion(CFStream stream)
         {
-            var readCount = VersionLength;
-            var versionBytes = stream.GetData(32, ref readCount);
+            var versionBytes = new byte[VersionLength];
+            var readCount = stream.Read(versionBytes, 32, VersionLength);
 
             if (readCount != VersionLength)
             {
@@ -151,8 +151,8 @@ namespace HwpSharp.Hwp5
 
         private static void ParseSignature(CFStream stream)
         {
-            var readCount = SignatureLength;
-            var signature = stream.GetData(0, ref readCount);
+            var signature = new byte[SignatureLength];
+            var readCount = stream.Read(signature, 0, SignatureLength);
 
             if (readCount != SignatureLength || !SignatureBytes.SequenceEqual(signature))
             {

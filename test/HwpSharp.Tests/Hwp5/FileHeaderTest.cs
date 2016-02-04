@@ -10,7 +10,7 @@ using Xunit;
 
 namespace HwpSharp.Tests.Hwp5
 {
-    public class Hwp5FileHeaderTest
+    public class FileHeaderTest
     {
         [Theory]
         [InlineData(@"../case/Hwp5/BlogForm_BookReview.hwp", "5.0.3.0")]
@@ -33,7 +33,7 @@ namespace HwpSharp.Tests.Hwp5
         [InlineData(@"../case/Hwp5/Worldcup_FIFA2010_32.hwp", "5.0.3.0")]
         public void Version_NormalHwp5Document(string filename, string expected)
         {
-            var document = new Hwp5Document(filename);
+            var document = new Document(filename);
 
             Assert.Equal(expected, document.FileHeader.FileVersion.ToString());
         }

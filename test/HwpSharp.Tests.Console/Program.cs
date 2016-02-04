@@ -12,7 +12,7 @@ namespace HwpSharp.Tests.Console
     {
         public void Main(string[] args)
         {
-            var doc = new Document(@"..\case\Hwp5\borderfill.hwp");
+            var doc = new Document(@"..\case\Hwp5\distribution.hwp");
             foreach (var section in doc.BodyText.Sections)
             {
                 if (section == null)

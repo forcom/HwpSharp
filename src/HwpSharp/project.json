@@ -1,7 +1,7 @@
 ﻿{
   "authors": [ "Yoon SeungYong" ],
   "dependencies": {
-    "OpenMcdf": "1.5.4.22637"
+    "OpenMcdf": "2.0.5739.40493"
   },
   "description": "C# Library for HWP documents",
   "frameworks": {
@@ -13,34 +13,10 @@
         "System.Linq": "4.0.0.0"
       }
     },
-    "net451": {
-      "frameworkAssemblies": {
-        "System": "4.0.0.0",
-        "System.Runtime": "4.0.0.0",
-        "System.Collections": "4.0.0.0",
-        "System.Linq": "4.0.0.0"
-      }
-    },
-    "net452": {
-      "frameworkAssemblies": {
-        "System": "4.0.0.0",
-        "System.Runtime": "4.0.0.0",
-        "System.Collections": "4.0.0.0",
-        "System.Linq": "4.0.0.0"
-      }
-    },
-    "net46": {
-      "frameworkAssemblies": {
-        "System": "4.0.0.0",
-        "System.Runtime": "4.0.0.0",
-        "System.Collections": "4.0.0.0",
-        "System.Linq": "4.0.0.0"
-      }
-    },
-    "dnx451": { }
+    "dnx45": { }
   },
-  "licenseUrl": "https://raw.githubusercontent.com/forcom/hwpSharp/master/LICENSE",
-  "projectUrl": "https://github.com/forcom/hwpSharp",
+  "licenseUrl": "https://raw.githubusercontent.com/forcom/HwpSharp/master/LICENSE",
+  "projectUrl": "https://github.com/forcom/HwpSharp",
   "tags": [ "" ],
   "version": "1.0.0-*"
 }
