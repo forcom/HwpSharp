@@ -63,7 +63,6 @@ namespace HwpSharp.Hwp5
             {
                 BodyText = LoadViewText(compoundFile);
                 compoundFile.Commit();
-                compoundFile.Save("distribution-released.hwp");
             }
         }
 
@@ -98,7 +97,8 @@ namespace HwpSharp.Hwp5
             }
 
             compoundFile.RootStorage.Delete("ViewText");
-            return LoadBodyText(compoundFile);
+            // return LoadBodyText(compoundFile);
+            return null;
         }
 
         private BodyText.BodyText LoadBodyText(CompoundFile compoundFile)

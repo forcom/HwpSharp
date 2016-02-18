@@ -12,17 +12,10 @@ namespace HwpSharp.Tests.Console
     {
         public void Main(string[] args)
         {
-            var doc = new Document(@"..\case\Hwp5\distribution.hwp");
-            foreach (var section in doc.BodyText.Sections)
+            foreach(var filename in System.IO.Directory.EnumerateFiles(@"..\psat", "*.hwp"))
             {
-                if (section == null)
-                    continue;
-                foreach (var record in section.DataRecords)
-                {
-                    if (record?.TagId != ParagraphText.ParagraphTextTagId)
-                        continue;
-                    System.Console.WriteLine(((ParagraphText) record)?.Text);
-                }
+                System.Console.WriteLine(filename);
+                new Document($@"..\psat\{filename}");
             }
         }
     }
