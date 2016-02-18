@@ -18,7 +18,7 @@ namespace HwpSharp.Hwp5.DocumentInformation.DataRecords
         public UInt32 CharacterUnitPosition { get; set; }
 
         public DocumentProperty(uint level, byte[] bytes, DocumentInformation _ = null)
-            : base(DocumentPropertiesTagId, level, (uint) bytes.Length)
+            : base(DocumentPropertiesTagId, level, (uint) bytes.Length, bytes)
         {
             SectionCount = bytes.ToUInt16();
             StartPageNumber = bytes.ToUInt16(2);

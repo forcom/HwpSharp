@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using HwpSharp.Hwp5.HwpType;
 
 namespace HwpSharp.Hwp5.BodyText.DataRecords
@@ -28,10 +29,14 @@ namespace HwpSharp.Hwp5.BodyText.DataRecords
         public HwpType.UInt32 ParagraphId { get; set; }
         public HwpType.UInt16 HistoryMergeParagraphFlag { get; set; }
 
+        private byte[] _rawBytes;
+
         public ParagraphHeader(uint level, byte[] bytes,
             DocumentInformation.DocumentInformation docInfo = null)
-            : base(ParagraphHeaderTagId, level, (uint) bytes.Length)
+            : base(ParagraphHeaderTagId, level, (uint) bytes.Length, bytes)
         {
+            _rawBytes = bytes;
+
             Length = bytes.ToUInt32();
             if ((Length & 0x80000000u) != 0)
             {
@@ -39,7 +44,7 @@ namespace HwpSharp.Hwp5.BodyText.DataRecords
             }
 
             ControlMask = bytes.ToUInt32(4);
-            
+
             ParagraphShapeId = bytes.ToUInt16(8);
 
             ParagraphStyleId = bytes[10];

@@ -126,7 +126,7 @@ namespace HwpSharp.Hwp5.DocumentInformation.DataRecords
         }
 
         public BinData(uint level, byte[] bytes, DocumentInformation _ = null)
-            : base(BinDataTagId, level, (uint) bytes.Length)
+            : base(BinDataTagId, level, (uint) bytes.Length, bytes)
         {
             var pos = 0;
             Property = new BinDataProperty(bytes.ToUInt16());

@@ -287,7 +287,7 @@ namespace HwpSharp.Hwp5.DocumentInformation.DataRecords
         }
 
         public FaceName(uint level, byte[] bytes, DocumentInformation _ = null)
-            : base(FaceNameTagId, level, (uint) bytes.Length)
+            : base(FaceNameTagId, level, (uint) bytes.Length, bytes)
         {
             var pos = 0;
 

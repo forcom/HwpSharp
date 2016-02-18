@@ -9,7 +9,7 @@ namespace HwpSharp.Hwp5.BodyText.DataRecords
         public string Text { get; set; }
 
         public ParagraphText(uint level, byte[] bytes, DocumentInformation.DocumentInformation _ = null)
-            : base(ParagraphTextTagId, level, (uint) bytes.Length)
+            : base(ParagraphTextTagId, level, (uint) bytes.Length, bytes)
         {
             Text = Encoding.Unicode.GetString(bytes);
         }

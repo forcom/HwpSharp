@@ -87,12 +87,15 @@ namespace HwpSharp.Hwp5
         /// </summary>
         public bool CclDocumented { get; set; }
 
+        private byte[] _rawBytes;
+
         /// <summary>
         /// Creates a <see cref="FileHeader"/> instance with a blank setting.
         /// </summary>
         public FileHeader()
         {
             FileVersion = new Version(5, 0, 0, 0);
+            _rawBytes = new byte[0];
         }
 
         internal FileHeader(CFStream stream)
@@ -102,6 +105,8 @@ namespace HwpSharp.Hwp5
 
         internal void SetFileHeader(CFStream stream)
         {
+            _rawBytes = stream.GetData();
+
             ParseSignature(stream);
             ParseFileVersion(stream);
             ParseAttribute(stream);

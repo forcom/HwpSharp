@@ -37,7 +37,7 @@ namespace HwpSharp
         /// <returns><see cref="IHwpDocument"/> instance.</returns>
         public static IHwpDocument Read(string filename)
         {
-            using (var stream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (var stream = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
             {
                 return Read(stream);
             }

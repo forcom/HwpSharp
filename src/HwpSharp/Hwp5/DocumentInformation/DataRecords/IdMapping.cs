@@ -81,7 +81,7 @@ namespace HwpSharp.Hwp5.DocumentInformation.DataRecords
         }
 
         public IdMapping(uint level, byte[] bytes, DocumentInformation _ = null)
-            : base(IdMappingsTagId, level, (uint) bytes.Length)
+            : base(IdMappingsTagId, level, (uint) bytes.Length, bytes)
         {
             var mappings = new List<Int32>();
             for (var pos = 0; pos < bytes.Length; pos += 4)

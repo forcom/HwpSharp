@@ -504,7 +504,7 @@ namespace HwpSharp.Hwp5.DocumentInformation.DataRecords
         public Diagonal DiagonalProperty { get; }
 
         public BorderFill(uint level, byte[] bytes, DocumentInformation _ = null)
-            : base(BorderFillTagId, level, (uint) bytes.Length)
+            : base(BorderFillTagId, level, (uint) bytes.Length, bytes)
         {
             var pos = 0;
 

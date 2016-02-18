@@ -29,11 +29,49 @@ namespace HwpSharp.Hwp5.HwpType
         /// </summary>
         public DWord Size { get; internal set; }
 
-        protected DataRecord(uint tagId, uint level, DWord size)
+        public byte[] RawBytes { get; internal set; }
+
+        protected DataRecord(uint tagId, uint level, DWord size, byte[] bytes)
         {
             TagId = tagId;
             Level = level;
             Size = size;
+
+            RawBytes = bytes;
+        }
+
+        internal static DataRecord GetRecordFromBytes(byte[] bytes, out int length,
+            DocumentInformation.DocumentInformation docInfo = null)
+        {
+            return GetRecordFromBytes(bytes, 0, out length, docInfo);
+        }
+
+        internal static DataRecord GetRecordFromBytes(byte[] bytes, int offset, out int length,
+            DocumentInformation.DocumentInformation docInfo = null)
+        {
+            if (offset >= bytes.Length)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            length = 0;
+
+            var header = bytes.ToDWord(offset);
+            length += 4;
+
+            var tagId = header & 0x3FF;
+            var level = (header >> 10) & 0x3FF;
+            var size = header >> 20;
+            if (size == 0xfff)
+            {
+                size = bytes.ToDWord(offset + length);
+                length += 4;
+            }
+
+            var recordBytes = bytes.Skip(offset + length).Take((int) size).ToArray();
+            length += (int) size;
+
+            return DataRecordFactory.Create(tagId, level, recordBytes, docInfo);
         }
 
         internal static IEnumerable<DataRecord> GetRecordsFromBytes(byte[] bytes, DocumentInformation.DocumentInformation docInfo = null)
@@ -43,29 +81,49 @@ namespace HwpSharp.Hwp5.HwpType
             var pos = 0;
             while (pos < bytes.Length)
             {
-                var header = bytes.ToDWord(pos);
-                pos += 4;
-
-                var tagId = header & 0x3FF;
-                var level = (header >> 10) & 0x3FF;
-                var size = header >> 20;
-                if (size == 0xfff)
-                {
-                    size = bytes.ToDWord(pos);
-                    pos += 4;
-                }
-
-                var recordBytes = bytes.Skip(pos).Take((int) size).ToArray();
-                pos += (int) size;
-                var record = DataRecordFactory.Create(tagId, level, recordBytes, docInfo);
-
+                int length;
+                var record = GetRecordFromBytes(bytes, pos, out length);
                 if (record != null)
                 {
                     records.Add(record);
                 }
+
+                pos += length;
             }
 
             return records;
+        }
+
+        protected internal byte[] GetHeaderBytes()
+        {
+            if (Size >= 0xfff)
+            {
+                DWord header = 0xfff | (Level << 10) | TagId;
+                var result = new byte[8];
+                header.ToBytes().CopyTo(result, 0);
+                Size.ToBytes().CopyTo(result, 4);
+                return result;
+            }
+            else
+            {
+                DWord header = (Size << 20) | (Level << 10) | TagId;
+                return header.ToBytes();
+            }
+        }
+
+        protected internal byte[] GetBytes()
+        {
+            var headerBytes = GetHeaderBytes();
+
+            if (RawBytes == null || RawBytes.Length == 0)
+            {
+                return headerBytes;
+            }
+
+            var result = new byte[headerBytes.Length + RawBytes.Length];
+            headerBytes.CopyTo(result, 0);
+            RawBytes.CopyTo(result, headerBytes.Length);
+            return result;
         }
     }
 
@@ -111,7 +169,7 @@ namespace HwpSharp.Hwp5.HwpType
         public byte[] Data { get; private set; }
 
         public DataRecordImpl(uint tagId, uint level, byte[] data = null)
-            : base(tagId, level, (uint) (data?.Length ?? 0))
+            : base(tagId, level, (uint) (data?.Length ?? 0), data)
         {
             Data = data;
         }

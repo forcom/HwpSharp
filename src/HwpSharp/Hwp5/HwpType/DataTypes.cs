@@ -123,6 +123,17 @@ namespace HwpSharp.Hwp5.HwpType
         {
             return _value.ToString();
         }
+
+        public byte[] ToBytes()
+        {
+            return new[]
+            {
+                (byte) (_value & 0xFF),
+                (byte) ((_value >> 0x100) & 0xFF),
+                (byte) ((_value >> 0x10000) & 0xFF),
+                (byte) (_value >> 0x1000000)
+            };
+        }
     }
 
     /// <summary>
@@ -323,6 +334,15 @@ namespace HwpSharp.Hwp5.HwpType
         {
             return _value.ToString();
         }
+
+        public byte[] ToBytes()
+        {
+            return new[]
+            {
+                (byte) (_value & 0xFF),
+                (byte) ((_value >> 0x100) & 0xFF)
+            };
+        }
     }
 
     /// <summary>
@@ -362,6 +382,17 @@ namespace HwpSharp.Hwp5.HwpType
         public override string ToString()
         {
             return _value.ToString();
+        }
+
+        public byte[] ToBytes()
+        {
+            return new[]
+            {
+                (byte) (_value & 0xFF),
+                (byte) ((_value >> 0x100) & 0xFF),
+                (byte) ((_value >> 0x10000) & 0xFF),
+                (byte) (_value >> 0x1000000)
+            };
         }
     }
 

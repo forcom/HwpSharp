@@ -1,8 +1,13 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using HwpSharp.Common;
 using HwpSharp.Hwp5.BodyText;
+using HwpSharp.Hwp5.HwpType;
 using OpenMcdf;
 
 namespace HwpSharp.Hwp5
@@ -50,7 +55,34 @@ namespace HwpSharp.Hwp5
         {
             FileHeader = LoadFileHeader(compoundFile);
             DocumentInformation = LoadDocumentInformation(compoundFile);
-            BodyText = LoadBodyText(compoundFile);
+            if (!FileHeader.Published)
+            {
+                BodyText = LoadBodyText(compoundFile);
+            }
+            else
+            {
+                BodyText = LoadViewText(compoundFile);
+            }
+        }
+
+        private BodyText.BodyText LoadViewText(CompoundFile compoundFile)
+        {
+            CFStorage storage;
+            try
+            {
+                storage = compoundFile.RootStorage.GetStorage("ViewText");
+            }
+            catch (CFItemNotFound exception)
+            {
+                throw new HwpFileFormatException("Specified document does not have any BodyText fields.", exception);
+            }
+
+            var bodyText = new BodyText.BodyText(storage, DocumentInformation);
+            
+            compoundFile.Commit();
+            compoundFile.Save("distribute-released.hwp");
+
+            return bodyText;
         }
 
         private BodyText.BodyText LoadBodyText(CompoundFile compoundFile)
@@ -117,7 +149,7 @@ namespace HwpSharp.Hwp5
 
             try
             {
-                using (var compoundFile = new CompoundFile(stream))
+                using (var compoundFile = new CompoundFile(stream, CFSUpdateMode.Update, CFSConfiguration.Default))
                 {
                     Load(compoundFile);
                 }
@@ -141,7 +173,7 @@ namespace HwpSharp.Hwp5
 
             try
             {
-                using (var compoundFile = new CompoundFile(filename))
+                using (var compoundFile = new CompoundFile(filename, CFSUpdateMode.Update, CFSConfiguration.Default))
                 {
                     Load(compoundFile);
                 }
@@ -152,7 +184,7 @@ namespace HwpSharp.Hwp5
             }
         }
 
-        internal static byte[] GetRawBytesFromStream(CFStream stream, FileHeader fileHeader)
+        internal static byte[] GetRawBytesFromStream(CFStream stream, FileHeader fileHeader, bool isDistribution = false)
         {
             var streamBytes = stream.GetData();
 
@@ -161,7 +193,98 @@ namespace HwpSharp.Hwp5
                 throw new HwpUnsupportedFormatException("Does not support a password encrypted document.");
             }
 
-            if (fileHeader.Compressed)
+            if (fileHeader.Published && isDistribution)
+            {
+                using (var dataStream = new MemoryStream(streamBytes, false))
+                {
+                    int length;
+                    var recordBytes = new byte[260];
+                    dataStream.Read(recordBytes, 0, recordBytes.Length);
+                    var record = DataRecord.GetRecordFromBytes(recordBytes, out length);
+
+                    var seed = record.RawBytes;
+
+                    {
+                        var random = new Common.Random(seed.ToDWord()).GetEnumerator();
+
+                        uint n = 0;
+                        byte key = 0;
+                        for (var i = 0; i < 256; ++i, --n)
+                        {
+                            if (n == 0)
+                            {
+                                random.MoveNext();
+                                key = (byte) (random.Current & 0xFF);
+                                random.MoveNext();
+                                n = (random.Current & 0xF) + 1;
+                            }
+                            if (i >= 4)
+                            {
+                                seed[i] ^= key;
+                            }
+                        }
+                    }
+
+                    var offset = 4 + (seed[0] & 0x0F);
+                    seed[offset + 80] = 0;
+                    // seed[offset + 81] = 0;
+
+                    {
+                        var random = new Common.Random(seed.ToDWord()).GetEnumerator();
+
+                        uint n = 0;
+                        byte key = 0;
+                        for (var i = 0; i < 256; ++i, --n)
+                        {
+                            if (n == 0)
+                            {
+                                random.MoveNext();
+                                key = (byte)(random.Current & 0xFF);
+                                random.MoveNext();
+                                n = (random.Current & 0xF) + 1;
+                            }
+                            if (i >= 4)
+                            {
+                                seed[i] ^= key;
+                            }
+                        }
+                    }
+
+                    streamBytes[4 + offset + 80] = seed[offset + 80];
+                    // streamBytes[4 + offset + 81] = seed[offset + 81];
+
+                    stream.SetData(streamBytes);
+
+                    /*
+                    var shaKey = new byte[16];
+                    Array.Copy(seed, offset, shaKey, 0, shaKey.Length);
+
+                    using (
+                        var aes = new AesManaged
+                        {
+                            Key = shaKey,
+                            KeySize = 128,
+                            BlockSize = 128,
+                            Mode = CipherMode.ECB,
+                            Padding = PaddingMode.None
+                        })
+                    {
+                        using (var cryptoStream = new CryptoStream(dataStream, aes.CreateDecryptor(), CryptoStreamMode.Read))
+                        {
+                            using (var decryptedStream = new MemoryStream())
+                            {
+                                cryptoStream.CopyTo(decryptedStream);
+
+                                streamBytes = decryptedStream.ToArray();
+                            }
+                        }
+                    }
+
+                    */
+                }
+            }
+
+            else if (fileHeader.Compressed)
             {
                 using (var dataStream = new MemoryStream(streamBytes, false))
                 {
@@ -169,7 +292,14 @@ namespace HwpSharp.Hwp5
                     {
                         using (var decStream = new MemoryStream())
                         {
-                            zipStream.CopyTo(decStream);
+                            try
+                            {
+                                zipStream.CopyTo(decStream);
+                            }
+                            catch(Exception e)
+                            {
+                                Debug.WriteLine(e.Message);
+                            }
 
                             streamBytes = decStream.ToArray();
                         }
