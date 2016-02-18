@@ -24,7 +24,7 @@ namespace HwpSharp.Hwp5.BodyText
         {
             DocumentInformation = docInfo;
 
-            var bytes = Document.GetRawBytesFromStream(stream, docInfo.FileHeader, docInfo.FileHeader.Published);
+            var bytes = Document.GetRawBytesFromStream(stream, docInfo.FileHeader);
             DataRecords = new List<DataRecord>(DataRecord.GetRecordsFromBytes(bytes, docInfo));
         }
     }

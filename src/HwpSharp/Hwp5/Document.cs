@@ -62,27 +62,43 @@ namespace HwpSharp.Hwp5
             else
             {
                 BodyText = LoadViewText(compoundFile);
+                compoundFile.Commit();
+                compoundFile.Save("distribution-released.hwp");
             }
         }
 
         private BodyText.BodyText LoadViewText(CompoundFile compoundFile)
         {
-            CFStorage storage;
+            CFStorage storage, bodyTextStorage;
             try
             {
                 storage = compoundFile.RootStorage.GetStorage("ViewText");
+                compoundFile.RootStorage.Delete("BodyText");
+                bodyTextStorage = compoundFile.RootStorage.AddStorage("BodyText");
             }
             catch (CFItemNotFound exception)
             {
                 throw new HwpFileFormatException("Specified document does not have any BodyText fields.", exception);
             }
 
-            var bodyText = new BodyText.BodyText(storage, DocumentInformation);
-            
-            compoundFile.Commit();
-            compoundFile.Save("distribute-released.hwp");
+            for (int i = 0; i < DocumentInformation.DocumentProperty.SectionCount; ++i)
+            {
+                try
+                {
+                    var stream = storage.GetStream($"Section{i}");
+                    var bytes = GetRawBytesFromStream(stream, DocumentInformation.FileHeader, DocumentInformation.FileHeader.Published);
 
-            return bodyText;
+                    var newStream = bodyTextStorage.AddStream($"Section{i}");
+                    newStream.SetData(bytes);
+                }
+                catch (CFItemNotFound exception)
+                {
+                    throw new HwpCorruptedBodyTextException("The document does not have some sections. File may be corrupted.", exception);
+                }
+            }
+
+            compoundFile.RootStorage.Delete("ViewText");
+            return LoadBodyText(compoundFile);
         }
 
         private BodyText.BodyText LoadBodyText(CompoundFile compoundFile)
@@ -132,6 +148,7 @@ namespace HwpSharp.Hwp5
             }
 
             var fileHeader = new FileHeader(stream);
+            stream.SetData(fileHeader.RawBytes);
 
             return fileHeader;
         }
@@ -226,64 +243,29 @@ namespace HwpSharp.Hwp5
                     }
 
                     var offset = 4 + (seed[0] & 0x0F);
-                    seed[offset + 80] = 0;
-                    // seed[offset + 81] = 0;
-
-                    {
-                        var random = new Common.Random(seed.ToDWord()).GetEnumerator();
-
-                        uint n = 0;
-                        byte key = 0;
-                        for (var i = 0; i < 256; ++i, --n)
-                        {
-                            if (n == 0)
-                            {
-                                random.MoveNext();
-                                key = (byte)(random.Current & 0xFF);
-                                random.MoveNext();
-                                n = (random.Current & 0xF) + 1;
-                            }
-                            if (i >= 4)
-                            {
-                                seed[i] ^= key;
-                            }
-                        }
-                    }
-
-                    streamBytes[4 + offset + 80] = seed[offset + 80];
-                    // streamBytes[4 + offset + 81] = seed[offset + 81];
-
-                    stream.SetData(streamBytes);
-
-                    /*
                     var shaKey = new byte[16];
                     Array.Copy(seed, offset, shaKey, 0, shaKey.Length);
 
                     using (
                         var aes = new AesManaged
                         {
-                            Key = shaKey,
                             KeySize = 128,
                             BlockSize = 128,
                             Mode = CipherMode.ECB,
                             Padding = PaddingMode.None
                         })
                     {
-                        using (var cryptoStream = new CryptoStream(dataStream, aes.CreateDecryptor(), CryptoStreamMode.Read))
+                        using (var cryptoStream = new CryptoStream(dataStream, aes.CreateDecryptor(shaKey, shaKey), CryptoStreamMode.Read))
                         {
                             using (var decryptedStream = new MemoryStream())
                             {
                                 cryptoStream.CopyTo(decryptedStream);
-
                                 streamBytes = decryptedStream.ToArray();
                             }
                         }
                     }
-
-                    */
                 }
             }
-
             else if (fileHeader.Compressed)
             {
                 using (var dataStream = new MemoryStream(streamBytes, false))
@@ -292,15 +274,7 @@ namespace HwpSharp.Hwp5
                     {
                         using (var decStream = new MemoryStream())
                         {
-                            try
-                            {
-                                zipStream.CopyTo(decStream);
-                            }
-                            catch(Exception e)
-                            {
-                                Debug.WriteLine(e.Message);
-                            }
-
+                            zipStream.CopyTo(decStream);
                             streamBytes = decStream.ToArray();
                         }
                     }

@@ -88,6 +88,7 @@ namespace HwpSharp.Hwp5
         public bool CclDocumented { get; set; }
 
         private byte[] _rawBytes;
+        public byte[] RawBytes => _rawBytes;
 
         /// <summary>
         /// Creates a <see cref="FileHeader"/> instance with a blank setting.
@@ -110,6 +111,8 @@ namespace HwpSharp.Hwp5
             ParseSignature(stream);
             ParseFileVersion(stream);
             ParseAttribute(stream);
+
+            _rawBytes[SignatureLength + VersionLength] = (byte) (_rawBytes[SignatureLength + VersionLength] & 251);
         }
 
         private void ParseAttribute(CFStream stream)
