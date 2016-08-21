@@ -12,11 +12,12 @@
         "System.Collections": "4.0.0.0",
         "System.Linq": "4.0.0.0"
       }
-    },
-    "dnx45": { }
+    }
   },
-  "licenseUrl": "https://raw.githubusercontent.com/forcom/HwpSharp/master/LICENSE",
-  "projectUrl": "https://github.com/forcom/HwpSharp",
-  "tags": [ "" ],
+  "packOptions": {
+    "licenseUrl": "https://raw.githubusercontent.com/forcom/HwpSharp/master/LICENSE",
+    "projectUrl": "https://github.com/forcom/HwpSharp",
+    "tags": [ "" ]
+  },
   "version": "1.0.0-*"
 }

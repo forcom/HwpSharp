@@ -14,7 +14,10 @@
     "HwpSharp.Tests.Console": "HwpSharp.Tests.Console"
   },
 
+  "buildOptions": {
+    "emitEntryPoint": true
+}, 
   "frameworks": {
-    "dnx451": { }
+    "net451": { }
   }
 }

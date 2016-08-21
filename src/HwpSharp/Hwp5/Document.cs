@@ -117,7 +117,7 @@ namespace HwpSharp.Hwp5
 
             try
             {
-                using (var compoundFile = new CompoundFile(stream))
+                using (var compoundFile = new CompoundFile(stream, CFSUpdateMode.Update, CFSConfiguration.EraseFreeSectors | CFSConfiguration.SectorRecycle))
                 {
                     Load(compoundFile);
                 }
@@ -141,7 +141,7 @@ namespace HwpSharp.Hwp5
 
             try
             {
-                using (var compoundFile = new CompoundFile(filename))
+                using (var compoundFile = new CompoundFile(filename, CFSUpdateMode.Update, CFSConfiguration.EraseFreeSectors | CFSConfiguration.SectorRecycle))
                 {
                     Load(compoundFile);
                 }

@@ -9,9 +9,9 @@ namespace HwpSharp.Tests.Hwp5
     public class DocumentTest
     {
         [Theory]
-        [InlineData(@"../case/CompoundFile.xls", typeof(HwpFileFormatException), "Specified document does not have a FileHeader field.")]
-        [InlineData(@"../case/Hwp3File.hwp", typeof(HwpFileFormatException), "Specified document is not a hwp 5 document format.")]
-        [InlineData(@"../case/PdfFile.pdf", typeof(HwpFileFormatException), "Specified document is not a hwp 5 document format.")]
+        [InlineData(@"../../../../../case/CompoundFile.xls", typeof(HwpFileFormatException), "Specified document does not have a FileHeader field.")]
+        [InlineData(@"../../../../../case/Hwp3File.hwp", typeof(HwpFileFormatException), "Specified document is not a hwp 5 document format.")]
+        [InlineData(@"../../../../../case/PdfFile.pdf", typeof(HwpFileFormatException), "Specified document is not a hwp 5 document format.")]
         [InlineData(null, typeof(ArgumentNullException), "Value cannot be null.")]
         [InlineData(@"Non-Exist Document", typeof(FileNotFoundException), "Could not find file")]
         public void ConstructorWithFileName_AbnormalHwp5Document(string filename, Type expectedException, string expectedMessage)
@@ -26,9 +26,9 @@ namespace HwpSharp.Tests.Hwp5
         }
 
         [Theory]
-        [InlineData(@"../case/CompoundFile.xls", typeof(HwpFileFormatException), "Specified document does not have a FileHeader field.")]
-        [InlineData(@"../case/Hwp3File.hwp", typeof(HwpFileFormatException), "Specified document is not a hwp 5 document format.")]
-        [InlineData(@"../case/PdfFile.pdf", typeof(HwpFileFormatException), "Specified document is not a hwp 5 document format.")]
+        [InlineData(@"../../../../../case/CompoundFile.xls", typeof(HwpFileFormatException), "Specified document does not have a FileHeader field.")]
+        [InlineData(@"../../../../../case/Hwp3File.hwp", typeof(HwpFileFormatException), "Specified document is not a hwp 5 document format.")]
+        [InlineData(@"../../../../../case/PdfFile.pdf", typeof(HwpFileFormatException), "Specified document is not a hwp 5 document format.")]
         [InlineData(null, typeof(ArgumentNullException), "Value cannot be null.")]
         public void ConstructorWithStream_AbnormalHwp5Document(string filename, Type expectedException, string expectedMessage)
         {

@@ -10,7 +10,7 @@ namespace HwpSharp.Tests.Console
 {
     public class Program
     {
-        public void Main(string[] args)
+        public static void Main(string[] args)
         {
             var doc = new Document(@"..\case\Hwp5\distribution.hwp");
             foreach (var section in doc.BodyText.Sections)
